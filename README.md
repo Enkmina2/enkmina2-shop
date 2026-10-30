@@ -84,30 +84,15 @@ Para sustituirlos por tus enlaces reales de plataformas de afiliados (como Amazo
 
 ---
 
-## 🌐 Cómo publicar gratuitamente en GitHub Pages
+## 🌐 Publicación en GitHub Pages
 
-Para publicar tu tienda en internet en menos de 2 minutos:
-
-1. **Crea un repositorio en GitHub**:
-   - Ve a [GitHub](https://github.com) y crea un nuevo repositorio público (por ejemplo, `zapatillas-shop`).
-
-2. **Sube los archivos**:
-   - Inicializa git y sube los archivos de esta carpeta:
-     ```bash
-     git init
-     git add .
-     git commit -m "Versión inicial Zapatillas Shop"
-     git branch -M main
-     git remote add origin https://github.com/TU-USUARIO/zapatillas-shop.git
-     git push -u origin main
-     ```
-
-3. **Activa GitHub Pages**:
-   - En tu repositorio de GitHub, dirígete a **Settings** (Configuración) > pestaña **Pages** (en el menú lateral izquierdo).
-   - En **Branch**, selecciona la rama `main` y la carpeta `/ (root)`.
-   - Haz clic en **Save** (Guardar).
-   - En unos segundos, tu web estará online en una dirección como:
-     `https://TU-USUARIO.github.io/zapatillas-shop/`
+1. **Repositorio**: `https://github.com/Enkmina2/enkmina2-shop`
+2. **Configuración en GitHub**:
+   - En el repositorio, ve a **Settings** > pestaña **Pages**.
+   - En **Build and deployment > Branch**, selecciona `main` y la carpeta `/ (root)`.
+   - Haz clic en **Save**.
+3. **Dirección pública**:
+   `https://enkmina2.github.io/enkmina2-shop/`
 
 ---
 
