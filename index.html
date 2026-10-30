@@ -54,10 +54,10 @@
         <nav class="main-nav" aria-label="Navegación principal">
           <ul class="nav-links">
             <li><a href="#catalogo" onclick="setCategory('todas')">Catálogo</a></li>
-            <li><a href="#novedades" onclick="setCategory('novedades', true)">Novedades</a></li>
-            <li><a href="#running" onclick="setCategory('running', true)">Running</a></li>
-            <li><a href="#baloncesto" onclick="setCategory('baloncesto', true)">Baloncesto</a></li>
-            <li><a href="#urbano" onclick="setCategory('urbano', true)">Urbano</a></li>
+            <li><a href="#novedades" onclick="setCategory('novedades', true); return false;">Novedades</a></li>
+            <li><a href="#running" onclick="setCategory('running', true); return false;">Running</a></li>
+            <li><a href="#baloncesto" onclick="setCategory('baloncesto', true); return false;">Baloncesto</a></li>
+            <li><a href="#urbano" onclick="setCategory('urbano', true); return false;">Urbano</a></li>
           </ul>
         </nav>
 
@@ -85,10 +85,10 @@
     </div>
     <ul class="mobile-nav-links">
       <li><a href="#catalogo" onclick="setCategory('todas')">Ver todo el catálogo <span>→</span></a></li>
-      <li><a href="#novedades" onclick="setCategory('novedades', true)">Novedades <span>→</span></a></li>
-      <li><a href="#running" onclick="setCategory('running', true)">Zapatillas Running <span>→</span></a></li>
-      <li><a href="#baloncesto" onclick="setCategory('baloncesto', true)">Zapatillas Baloncesto <span>→</span></a></li>
-      <li><a href="#urbano" onclick="setCategory('urbano', true)">Estilo Urbano & Casual <span>→</span></a></li>
+      <li><a href="#novedades" onclick="setCategory('novedades', true); return false;">Novedades <span>→</span></a></li>
+      <li><a href="#running" onclick="setCategory('running', true); return false;">Zapatillas Running <span>→</span></a></li>
+      <li><a href="#baloncesto" onclick="setCategory('baloncesto', true); return false;">Zapatillas Baloncesto <span>→</span></a></li>
+      <li><a href="#urbano" onclick="setCategory('urbano', true); return false;">Estilo Urbano & Casual <span>→</span></a></li>
       <li><a href="javascript:void(0)" onclick="openPolicyModal('contacto')">Contacto y Dudas <span>→</span></a></li>
     </ul>
     <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--color-border); font-size: 0.85rem; color: var(--color-gray-medium);">
@@ -107,7 +107,7 @@
           <div class="hero-content">
             <div class="hero-pill">
               <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              Nueva temporada 2024 / 2025
+              Nueva temporada 2026 / 2027
             </div>
 
             <h1 class="hero-title">
@@ -347,10 +347,10 @@
           <h4>Categorías</h4>
           <ul class="footer-links">
             <li><a href="#catalogo" onclick="setCategory('todas')">Todas las zapatillas</a></li>
-            <li><a href="#novedades" onclick="setCategory('novedades', true)">Novedades 2025</a></li>
-            <li><a href="#running" onclick="setCategory('running', true)">Zapatillas Running</a></li>
-            <li><a href="#baloncesto" onclick="setCategory('baloncesto', true)">Baloncesto & Court</a></li>
-            <li><a href="#urbano" onclick="setCategory('urbano', true)">Estilo Urbano & Casual</a></li>
+            <li><a href="#novedades" onclick="setCategory('novedades', true); return false;">Novedades 2026</a></li>
+            <li><a href="#running" onclick="setCategory('running', true); return false;">Zapatillas Running</a></li>
+            <li><a href="#baloncesto" onclick="setCategory('baloncesto', true); return false;">Baloncesto & Court</a></li>
+            <li><a href="#urbano" onclick="setCategory('urbano', true); return false;">Estilo Urbano & Casual</a></li>
           </ul>
         </div>
 
@@ -379,7 +379,7 @@
       <!-- Pie legal y enlaces de políticas -->
       <div class="footer-bottom">
         <div>
-          &copy; 2025 ENKMINA2 SHOP. «Camina con propósito». Todos los derechos reservados. Marcas y logotipos pertenecen a sus respectivos propietarios.
+          &copy; <span id="anioActual">2026</span> ENKMINA2 SHOP. «Camina con propósito». Todos los derechos reservados. Marcas y logotipos pertenecen a sus respectivos propietarios.
         </div>
         <div class="footer-legal-links">
           <a href="javascript:void(0)" onclick="openPolicyModal('privacidad')">Privacidad</a>

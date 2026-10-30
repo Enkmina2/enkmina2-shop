@@ -860,6 +860,10 @@ input, select {
   letter-spacing: -0.05em;
 }
 
+.stars .star-empty {
+  color: #d1d5db;
+}
+
 .rating-count {
   color: var(--color-gray-medium);
   font-size: 0.75rem;
@@ -1526,7 +1530,16 @@ input, select {
     display: block;
   }
   
+  .header-inner {
+    height: auto;
+    flex-wrap: wrap;
+    row-gap: 0.6rem;
+    padding: 0.6rem 0 0.75rem;
+  }
+
   .header-search {
+    order: 3;
+    flex: 1 1 100%;
     max-width: none;
   }
   

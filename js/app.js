@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   renderCatalog();
   handleUrlHash();
+  window.addEventListener("hashchange", handleUrlHash);
+  const anio = document.getElementById("anioActual");
+  if (anio) anio.textContent = new Date().getFullYear();
 });
 
 /**
@@ -257,7 +260,7 @@ function renderCatalog() {
         <h3 class="card-title" title="${item.name}">${item.name}</h3>
         
         <div class="card-rating">
-          <span class="stars">★★★★★</span>
+          <span class="stars" aria-label="${item.rating} de 5">${renderStars(item.rating)}</span>
           <span class="rating-val"><strong>${item.rating}</strong></span>
           <span class="rating-count">(${item.reviewsCount})</span>
         </div>
@@ -284,6 +287,14 @@ function renderCatalog() {
 }
 
 /**
+ * Devuelve las estrellas (llenas y vacías) según la valoración
+ */
+function renderStars(rating) {
+  const llenas = Math.max(0, Math.min(5, Math.round(rating)));
+  return "★".repeat(llenas) + '<span class="star-empty">' + "★".repeat(5 - llenas) + "</span>";
+}
+
+/**
  * Resetea todos los filtros de búsqueda
  */
 function resetFilters() {
@@ -292,8 +303,10 @@ function resetFilters() {
   AppState.searchQuery = "";
   AppState.sortBy = "featured";
 
-  const searchInput = document.getElementById("headerSearchInput");
-  if (searchInput) searchInput.value = "";
+  ["headerSearchInput", "catalogSearchInput"].forEach(id => {
+    const searchInput = document.getElementById(id);
+    if (searchInput) searchInput.value = "";
+  });
 
   const clearBtn = document.getElementById("clearSearchBtn");
   if (clearBtn) clearBtn.style.display = "none";
@@ -328,7 +341,7 @@ function openOfferModal(productId) {
         <span class="modal-product-brand">${item.brand}</span>
         <h3>${item.name}</h3>
         <div class="card-rating" style="margin-bottom: 0.2rem;">
-          <span class="stars">★★★★★</span>
+          <span class="stars" aria-label="${item.rating} de 5">${renderStars(item.rating)}</span>
           <span><strong>${item.rating}</strong> / 5.0 (${item.reviewsCount} opiniones verificadas)</span>
         </div>
         <div class="modal-product-price">
