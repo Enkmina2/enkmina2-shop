@@ -1,8 +1,24 @@
 /**
- * Zapatillas Shop - Aplicación Principal
+ * ENKMINA2 SHOP - Aplicación Principal
  * Manejo de catálogo, filtros dinámicos, buscador en tiempo real,
- * ordenación, modales informativos y aviso de enlaces de afiliados.
+ * ordenación, modales informativos y enlaces de Afiliados de Amazon.
  */
+
+// ID de Afiliados de Amazon
+const AMAZON_TAG = "enkmina2shop-21";
+
+// Atributos comunes de los enlaces de afiliado
+const AMAZON_LINK_ATTRS = 'target="_blank" rel="nofollow sponsored noopener"';
+
+/**
+ * Enlace a Amazon.es con nuestro ID: ficha del producto si hay ASIN, si no, búsqueda por nombre
+ */
+function amazonUrl(item) {
+  if (item.asin) {
+    return `https://www.amazon.es/dp/${encodeURIComponent(item.asin)}?tag=${AMAZON_TAG}`;
+  }
+  return `https://www.amazon.es/s?k=${encodeURIComponent(item.name)}&tag=${AMAZON_TAG}`;
+}
 
 // Estado global de la aplicación
 const AppState = {
@@ -24,8 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initSortSelect();
   initMobileDrawer();
   initModals();
-  initNewsletterForm();
   initContactForm();
+  initHeroCard();
   renderCatalog();
   handleUrlHash();
   window.addEventListener("hashchange", handleUrlHash);
@@ -199,14 +215,8 @@ function getFilteredProducts() {
     return true;
   }).sort((a, b) => {
     switch (AppState.sortBy) {
-      case "price-asc":
-        return a.priceCurrent - b.priceCurrent;
-      case "price-desc":
-        return b.priceCurrent - a.priceCurrent;
-      case "discount":
-        return b.discountPercentage - a.discountPercentage;
-      case "rating":
-        return b.rating - a.rating;
+      case "name":
+        return a.name.localeCompare(b.name, "es");
       case "featured":
       default:
         return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
@@ -247,51 +257,33 @@ function renderCatalog() {
 
   grid.innerHTML = filtered.map(item => `
     <article class="product-card" data-id="${item.id}">
-      <div class="card-image-wrap">
-        ${item.badge ? `<span class="card-badge ${item.discountPercentage > 18 ? 'sale' : ''}">${item.badge}</span>` : ''}
-        ${item.discountPercentage > 0 ? `<span class="card-discount-tag">-${item.discountPercentage}%</span>` : ''}
-        <img src="${item.image}" 
-             alt="${item.name} - ${item.brand}" 
+      <div class="card-image-wrap" onclick="openOfferModal(${item.id})">
+        ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
+        <img src="${item.image}"
+             alt="${item.name} - ${item.brand}"
              loading="lazy"
              onerror="this.onerror=null; this.src='${SNEAKER_FALLBACK_SVG}';">
+        <span class="img-note">Imagen ilustrativa</span>
       </div>
       <div class="card-body">
         <div class="card-brand">${item.brand}</div>
-        <h3 class="card-title" title="${item.name}">${item.name}</h3>
-        
-        <div class="card-rating">
-          <span class="stars" aria-label="${item.rating} de 5">${renderStars(item.rating)}</span>
-          <span class="rating-val"><strong>${item.rating}</strong></span>
-          <span class="rating-count">(${item.reviewsCount})</span>
-        </div>
-
-        <div class="card-price-row">
-          <span class="price-current">${item.priceCurrent.toFixed(2)} €</span>
-          ${item.priceOriginal ? `<span class="price-original">${item.priceOriginal.toFixed(2)} €</span>` : ''}
-          <span class="price-indicator">Orientativo</span>
-        </div>
+        <h3 class="card-title" title="${item.name}">
+          <a href="javascript:void(0)" onclick="openOfferModal(${item.id})">${item.name}</a>
+        </h3>
 
         <div class="card-actions">
-          <button class="btn-offer" onclick="openOfferModal(${item.id})">
-            Ver oferta
+          <a class="btn-offer" href="${amazonUrl(item)}" ${AMAZON_LINK_ATTRS}>
+            Ver en Amazon
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>
             </svg>
-          </button>
+          </a>
         </div>
       </div>
     </article>
   `).join("");
-}
-
-/**
- * Devuelve las estrellas (llenas y vacías) según la valoración
- */
-function renderStars(rating) {
-  const llenas = Math.max(0, Math.min(5, Math.round(rating)));
-  return "★".repeat(llenas) + '<span class="star-empty">' + "★".repeat(5 - llenas) + "</span>";
 }
 
 /**
@@ -320,6 +312,15 @@ function resetFilters() {
 }
 
 /**
+ * Enlaza el botón de la tarjeta destacada de la portada con Amazon
+ */
+function initHeroCard() {
+  const btn = document.getElementById("heroAmazonBtn");
+  const item = PRODUCTS_DATA.find(p => p.id === 1);
+  if (btn && item) btn.href = amazonUrl(item);
+}
+
+/**
  * Abre el modal con información detallada y aviso de enlace afiliado
  */
 function openOfferModal(productId) {
@@ -331,23 +332,16 @@ function openOfferModal(productId) {
   if (!modalOverlay || !modalContent) return;
 
   modalContent.innerHTML = `
-    <span class="modal-header-badge">Enlace de afiliado demostrativo</span>
-    
+    <span class="modal-header-badge">Enlace de Afiliados de Amazon</span>
+
     <div class="modal-product-summary">
       <div class="modal-img-wrap">
         <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.src='${SNEAKER_FALLBACK_SVG}';">
+        <span class="img-note">Imagen ilustrativa</span>
       </div>
       <div class="modal-product-details">
         <span class="modal-product-brand">${item.brand}</span>
         <h3>${item.name}</h3>
-        <div class="card-rating" style="margin-bottom: 0.2rem;">
-          <span class="stars" aria-label="${item.rating} de 5">${renderStars(item.rating)}</span>
-          <span><strong>${item.rating}</strong> / 5.0 (${item.reviewsCount} opiniones verificadas)</span>
-        </div>
-        <div class="modal-product-price">
-          ${item.priceCurrent.toFixed(2)} €
-          ${item.priceOriginal ? `<small>${item.priceOriginal.toFixed(2)} €</small>` : ''}
-        </div>
       </div>
     </div>
 
@@ -358,10 +352,10 @@ function openOfferModal(productId) {
           <line x1="12" y1="8" x2="12" y2="12"></line>
           <line x1="12" y1="16" x2="12.01" y2="16"></line>
         </svg>
-        Aviso sobre esta oferta de demostración
+        Precio y disponibilidad en Amazon.es
       </h4>
       <p>
-        Este sitio web utiliza <strong>enlaces de demostración</strong> para ilustrar el funcionamiento de una tienda afiliada. Al hacer clic en el botón inferior, serías redirigido al distribuidor oficial o comercio colaborador (${item.store}).
+        El precio, las tallas y la disponibilidad son los que indique Amazon.es en el momento de la compra. Si compras a través de este enlace, podemos recibir una comisión sin ningún coste adicional para ti.
       </p>
     </div>
 
@@ -370,24 +364,15 @@ function openOfferModal(productId) {
     </p>
 
     <ul class="modal-specs-list">
-      <li><strong>Tienda asociada:</strong> ${item.store}</li>
+      <li><strong>Tienda:</strong> ${item.store}</li>
       <li><strong>Colorway:</strong> ${item.color}</li>
-      <li><strong>Tallas disponibles:</strong> EU ${item.sizes.join(", ")}</li>
-      <li><strong>Precio orientativo:</strong> Sujeto a stock y promociones vigentes.</li>
     </ul>
 
-    <div class="modal-affiliate-target">
-      <span>Enlace de demostración configurado (fácilmente editable en <code>js/products.js</code>):</span>
-      <code>${item.affiliateUrl}</code>
-    </div>
-
     <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-      <a href="${item.affiliateUrl}" 
-         target="_blank" 
-         rel="noopener noreferrer nofollow" 
-         class="modal-cta-btn" 
-         onclick="handleAffiliateClick(event, '${item.name}', '${item.affiliateUrl}')">
-        Ir a la tienda asociada (Demo)
+      <a href="${amazonUrl(item)}"
+         ${AMAZON_LINK_ATTRS}
+         class="modal-cta-btn">
+        Ver precio en Amazon
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
           <polyline points="15 3 21 3 21 9"></polyline>
@@ -399,15 +384,6 @@ function openOfferModal(productId) {
 
   modalOverlay.classList.add("active");
   document.body.style.overflow = "hidden";
-}
-
-/**
- * Notificación toast al pulsar en el enlace de demostración
- */
-function handleAffiliateClick(e, productName, demoUrl) {
-  e.preventDefault();
-  closeAllModals();
-  showToast(`Simulando redirección de afiliado para "${productName}" hacia el enlace de prueba.`);
 }
 
 /**
@@ -487,21 +463,20 @@ function openPolicyModal(type) {
         <p>En <strong>ENKMINA2 SHOP</strong> nos tomamos muy en serio la confidencialidad y privacidad de nuestros visitantes.</p>
         <h3>1. Datos recopilados</h3>
         <p>Este sitio web estático no recopila ni almacena datos personales ni financieros de los usuarios en ninguna base de datos sin su consentimiento explícito.</p>
-        <h3>2. Enlaces a terceros</h3>
-        <p>Nuestro portal contiene enlaces a tiendas online asociadas y marcas de calzado. Al hacer clic en dichos enlaces y abandonar nuestro sitio, la política de privacidad aplicable será la del sitio web de destino.</p>
-        <h3>3. Contacto y derechos</h3>
-        <p>Para cualquier duda o ejercicio de derechos ARCO, puede ponerse en contacto a través de nuestro formulario de contacto o en el correo de demostración <code>contacto@enkmina2shop.demo</code>.</p>
+        <h3>2. Enlaces a Amazon.es</h3>
+        <p>Nuestro catálogo contiene enlaces de afiliado a Amazon.es. Al hacer clic en ellos abandonas nuestro sitio y pasa a aplicarse la política de privacidad de Amazon. Amazon puede usar cookies para registrar que has llegado desde nuestros enlaces; consulta su Aviso de Privacidad y su Aviso de Cookies en Amazon.es.</p>
+        <h3>3. Derechos</h3>
+        <p>Puedes ejercer tus derechos de acceso, rectificación, supresión y oposición sobre cualquier dato personal que nos facilites.</p>
       `;
       break;
 
     case "cookies":
       title = "Política de Cookies";
       content = `
-        <p>Esta web utiliza cookies técnicas y analíticas necesarias para el correcto funcionamiento de la navegación y la medición agregada del tráfico.</p>
-        <h3>¿Qué cookies se utilizan?</h3>
+        <p>Esta web no instala cookies propias ni de analítica.</p>
+        <h3>Cookies de Amazon</h3>
         <ul>
-          <li><strong>Cookies técnicas:</strong> Permiten almacenar temporalmente las preferencias de visualización (filtros y orden de catálogo).</li>
-          <li><strong>Cookies de afiliación:</strong> Al visitar una tienda externa a través de un enlace de afiliado, dicha tienda puede emplear cookies para registrar la procedencia del usuario.</li>
+          <li><strong>Cookies de afiliación de Amazon:</strong> Cuando visitas Amazon.es desde nuestros enlaces, Amazon puede usar cookies para registrar que llegas desde ENKMINA2 SHOP y atribuirnos las compras que cumplan los requisitos del Programa de Afiliados. Esas cookies las gestiona Amazon según su propio Aviso de Cookies.</li>
         </ul>
         <p>Puede configurar su navegador en cualquier momento para bloquear o rechazar las cookies sin que ello impida consultar el catálogo.</p>
       `;
@@ -510,33 +485,18 @@ function openPolicyModal(type) {
     case "afiliacion":
       title = "Aviso Legal y Transparencia de Afiliación";
       content = `
-        <p><strong>Aviso de Divulgación de Afiliación:</strong> ENKMINA2 SHOP («Camina con propósito») es un catálogo y comparador independiente de calzado deportivo.</p>
-        <h3>Transparencia Comercial</h3>
-        <p>Participamos en diversos programas de afiliación de tiendas y marcas reconocidas. Esto significa que podemos percibir una pequeña comisión si decides adquirir un producto a través de nuestros enlaces recomendados, <strong>sin que ello suponga ningún coste adicional para ti</strong>.</p>
-        <h3>Precios orientativos</h3>
-        <p>Todos los precios mostrados son de carácter orientativo y corresponden a la información recopilada en el momento de la publicación. Los precios y el stock definitivos son siempre los indicados en la web del vendedor final.</p>
+        <p class="amazon-disclosure"><strong>«En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.»</strong></p>
+        <h3>Programa de Afiliados de Amazon</h3>
+        <p>ENKMINA2 SHOP («Camina con propósito») es un catálogo independiente de calzado deportivo que participa en el Programa de Afiliados de Amazon.es (ID: <code>enkmina2shop-21</code>). Si compras a través de nuestros enlaces, podemos recibir una comisión <strong>sin ningún coste adicional para ti</strong>.</p>
+        <h3>Precios, disponibilidad e imágenes</h3>
+        <p>No mostramos precios ni valoraciones. El precio, las tallas y la disponibilidad son los que indique Amazon.es en el momento de la compra. Las imágenes del catálogo son ilustrativas y pueden no corresponder exactamente al modelo.</p>
       `;
       break;
 
     case "contacto":
       title = "Contacto y Soporte";
       content = `
-        <p>¿Tienes dudas sobre algún modelo, sugerencias o quieres colaborar con nosotros? Rellena el siguiente formulario:</p>
-        <form id="modalContactForm" class="contact-form-grid" onsubmit="handleContactSubmit(event)">
-          <div class="form-group">
-            <label for="contactName">Nombre completo</label>
-            <input type="text" id="contactName" required placeholder="Ej. Carlos Martínez">
-          </div>
-          <div class="form-group">
-            <label for="contactEmail">Correo electrónico</label>
-            <input type="email" id="contactEmail" required placeholder="nombre@ejemplo.com">
-          </div>
-          <div class="form-group">
-            <label for="contactMsg">Mensaje o consulta</label>
-            <textarea id="contactMsg" rows="4" required placeholder="Escribe aquí tu duda sobre zapatillas, tallas o colaboraciones..."></textarea>
-          </div>
-          <button type="submit" class="btn-primary" style="margin-top: 0.5rem; justify-content: center;">Enviar mensaje</button>
-        </form>
+        <p>Estamos preparando un canal de contacto. Mientras tanto, puedes consultar las dudas sobre tallas, envíos o devoluciones directamente en la página del producto en Amazon.es.</p>
       `;
       break;
   }
@@ -548,32 +508,6 @@ function openPolicyModal(type) {
 
   overlay.classList.add("active");
   document.body.style.overflow = "hidden";
-}
-
-/**
- * Enviar formulario de contacto
- */
-function handleContactSubmit(e) {
-  e.preventDefault();
-  closeAllModals();
-  showToast("¡Mensaje de demostración enviado correctamente! Te responderemos a la mayor brevedad.");
-}
-
-/**
- * Enviar suscripción a newsletter de demostración
- */
-function initNewsletterForm() {
-  const form = document.getElementById("newsletterForm");
-  if (!form) return;
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const input = form.querySelector("input[type='email']");
-    if (input && input.value) {
-      input.value = "";
-      showToast("¡Gracias por suscribirte al boletín de ENKMINA2 SHOP!");
-    }
-  });
 }
 
 function initContactForm() {

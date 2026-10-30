@@ -554,18 +554,36 @@ input, select {
   justify-content: space-between;
 }
 
-.hero-card-price {
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: var(--color-dark);
+.hero-card-details {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-gray-dark);
+  text-decoration: underline;
 }
 
-.hero-card-price small {
-  font-size: 0.85rem;
-  text-decoration: line-through;
+/* Aviso "Imagen ilustrativa" sobre las fotos */
+.img-note {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  background-color: rgba(15, 17, 21, 0.6);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* En la portada va debajo de la foto, no encima */
+.hero-card .img-note {
+  position: static;
+  display: inline-block;
+  margin-top: 0.4rem;
+  background-color: transparent;
   color: var(--color-gray-medium);
-  margin-left: 0.4rem;
-  font-weight: 500;
+  padding: 0;
 }
 
 /* ==========================================================================
@@ -764,6 +782,7 @@ input, select {
 
 .card-image-wrap {
   position: relative;
+  cursor: pointer;
   background-color: #f1f3f5;
   aspect-ratio: 1 / 1;
   overflow: hidden;
@@ -798,24 +817,6 @@ input, select {
   z-index: 2;
 }
 
-.card-badge.sale {
-  background-color: var(--color-danger);
-}
-
-.card-discount-tag {
-  position: absolute;
-  top: 0.85rem;
-  right: 0.85rem;
-  background-color: #fff;
-  color: var(--color-danger);
-  border: 1px solid rgba(225, 29, 72, 0.2);
-  font-size: 0.72rem;
-  font-weight: 800;
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
-  z-index: 2;
-}
-
 .card-body {
   padding: 1.25rem;
   display: flex;
@@ -837,64 +838,12 @@ input, select {
   font-weight: 800;
   color: var(--color-dark);
   line-height: 1.3;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   min-height: 2.6rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-.card-rating {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.8rem;
-  color: var(--color-gray-dark);
-  margin-bottom: 0.75rem;
-}
-
-.stars {
-  color: var(--color-star);
-  font-size: 0.85rem;
-  letter-spacing: -0.05em;
-}
-
-.stars .star-empty {
-  color: #d1d5db;
-}
-
-.rating-count {
-  color: var(--color-gray-medium);
-  font-size: 0.75rem;
-}
-
-.card-price-row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.price-current {
-  font-size: 1.28rem;
-  font-weight: 900;
-  color: var(--color-dark);
-}
-
-.price-original {
-  font-size: 0.88rem;
-  text-decoration: line-through;
-  color: var(--color-gray-medium);
-}
-
-.price-indicator {
-  font-size: 0.7rem;
-  color: var(--color-gray-medium);
-  margin-left: auto;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 600;
 }
 
 .card-actions {
@@ -914,6 +863,14 @@ input, select {
   justify-content: center;
   gap: 0.5rem;
   transition: var(--transition);
+}
+
+.card-title a {
+  color: inherit;
+}
+
+.amazon-disclosure {
+  margin-bottom: 0.6rem;
 }
 
 .btn-offer:hover {
@@ -1045,7 +1002,7 @@ input, select {
 }
 
 /* ==========================================================================
-   VENTANA MODAL PARA "VER OFERTA" (DEMO TRANSPARENTE)
+   VENTANA MODAL DEL PRODUCTO (ENLACE A AMAZON)
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -1132,6 +1089,7 @@ input, select {
 }
 
 .modal-img-wrap {
+  position: relative;
   width: 140px;
   height: 140px;
   border-radius: var(--radius-md);
@@ -1344,7 +1302,7 @@ input, select {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 3rem;
   margin-bottom: 3.5rem;
 }

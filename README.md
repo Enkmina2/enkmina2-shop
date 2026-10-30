@@ -16,17 +16,17 @@ Diseñado con una estética moderna, limpia y comercial (estilo tienda online de
 - **Catálogo Dinámico e Interactivo**:
   - Filtro por categorías: *Todas, Novedades, Running, Baloncesto, Estilo Urbano*.
   - Filtro por marcas: *Nike, Adidas, Jordan, New Balance, Puma, Asics*.
-  - Ordenación por destacados, precio (ascendente / descendente), porcentaje de descuento y valoración.
+  - Ordenación por destacados o por nombre (A-Z).
   - Buscador predictivo en vivo por nombre, marca o características.
 - **Tarjetas de Zapatillas**:
   - Fotografía en alta resolución con fallback automático anti-errores.
-  - Marca, modelo, etiqueta de novedad / rebaja, valoración por estrellas y reseñas.
-  - **Precio orientativo** claramente indicado.
-  - Botón **«Ver oferta»** que abre un panel transparente con detalles, tallas y el enlace asociado de demostración.
+  - Marca, modelo, etiqueta de novedad y aviso «Imagen ilustrativa».
+  - Sin precios ni valoraciones escritos a mano (lo exigen las normas de Afiliados de Amazon).
+  - Botón **«Ver en Amazon»** con el enlace de afiliado; al pulsar la foto o el nombre se abre la ficha con el botón **«Ver precio en Amazon»**.
 - **Secciones Temáticas**: Novedades, Running, Baloncesto y Estilo Urbano con acceso directo a sus gamas.
 - **Cumplimiento Legal y Transparencia**:
-  - Cuadro visible de **Aviso de Afiliación** en el pie de página.
-  - Modales funcionales e informativos para **Política de Privacidad**, **Política de Cookies**, **Aviso Legal** y **Formulario de Contacto**.
+  - Aviso obligatorio de Afiliados de Amazon visible en el pie de página y en el Aviso Legal.
+  - Modales informativos para **Política de Privacidad**, **Política de Cookies**, **Aviso Legal** y **Contacto**.
 
 ---
 
@@ -40,7 +40,7 @@ Zapatillas-Shop/
 ├── css/
 │   └── style.css       # Estilos modernos, diseño responsive y temas
 ├── js/
-│   ├── products.js     # Base de datos de productos (enlaces y precios demostrativos)
+│   ├── products.js     # Catálogo de productos (modelo, marca, categorías, ASIN)
 │   └── app.js          # Lógica interactiva de filtros, buscador y modales
 └── README.md           # Guía de uso, personalización y despliegue
 ```
@@ -64,23 +64,22 @@ Al tratarse de una web estática pura (HTML, CSS y JavaScript sin dependencias p
 
 ---
 
-## 🔗 Cómo personalizar los enlaces de afiliado
+## 🔗 Enlaces de Afiliados de Amazon
 
-Todos los enlaces de oferta son de demostración y están centralizados en el archivo:
-📂 `js/products.js`
+Los enlaces se generan automáticamente en `js/app.js` con la función `amazonUrl(item)` y el ID de afiliado `enkmina2shop-21`:
 
-Cada producto cuenta con el parámetro `affiliateUrl`:
+- Si el producto tiene `asin`, el enlace va a su ficha: `https://www.amazon.es/dp/<ASIN>?tag=enkmina2shop-21`
+- Si `asin` está vacío, el enlace es una búsqueda en Amazon.es por el nombre del modelo.
+
+Para enlazar un producto concreto, rellena su campo `asin` en `js/products.js`:
 ```javascript
 {
   id: 1,
+  asin: "B0XXXXXXXX",
   name: "Air Jordan 1 Retro High OG",
-  brand: "Jordan",
   // ...
-  affiliateUrl: "https://ejemplo-afiliado.com/oferta/air-jordan-1-retro?ref=zapatillasshop",
-  store: "Nike Store Oficial"
 }
 ```
-Para sustituirlos por tus enlaces reales de plataformas de afiliados (como Amazon Afiliados, Awin, Nike Affiliate Program, CJ Affiliate, etc.), solo debes cambiar la URL en `affiliateUrl` por tu enlace de afiliado personal.
 
 ---
 
@@ -98,4 +97,6 @@ Para sustituirlos por tus enlaces reales de plataformas de afiliados (como Amazo
 
 ## ⚖️ Aviso Legal y Afiliación
 
-Los datos, ofertas y enlaces incluidos en este proyecto se proporcionan con fines demostrativos. Zapatillas Shop está preparado para cumplir con los estándares de divulgación comercial del FTC y de la Unión Europea sobre transparencia en enlaces de afiliación.
+«En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.»
+
+ENKMINA2 SHOP participa en el Programa de Afiliados de Amazon.es (ID: `enkmina2shop-21`). La web no muestra precios ni valoraciones: el precio y la disponibilidad son los que indique Amazon.es en el momento de la compra. Las imágenes son ilustrativas.
