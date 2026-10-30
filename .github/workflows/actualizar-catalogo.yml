@@ -1,0 +1,65 @@
+name: Actualizar Catálogo Amazon Afiliados
+
+# ==============================================================================
+# ENKMINA2 SHOP - Flujo de automatización para Amazon Afiliados
+#
+# ESTADO: DESACTIVADO DE FORMA AUTOMÁTICA (SOLO EJECUCIÓN MANUAL).
+# No se ejecutará periódicamente hasta que tu cuenta cumpla los requisitos
+# de Amazon y configures las credenciales en GitHub Secrets.
+# ==============================================================================
+
+on:
+  # Ejecución únicamente manual desde la pestaña 'Actions' de GitHub:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Motivo de la actualización manual'
+        required: false
+        default: 'Actualización manual solicitada'
+
+  # NOTA: La ejecución automática programada (cron diario cada 24 horas)
+  # se deja comentada a continuación para que NO se active sin autorización:
+  # schedule:
+  #   - cron: '0 4 * * *'  # Todos los días a las 04:00 UTC
+
+jobs:
+  update-catalog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Descargar código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Compilar y actualizar catálogo
+        env:
+          AMAZON_ACCESS_KEY: ${{ secrets.AMAZON_ACCESS_KEY }}
+          AMAZON_SECRET_KEY: ${{ secrets.AMAZON_SECRET_KEY }}
+          AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG || 'enkmina2shop-21' }}
+        run: |
+          node scripts/actualizar-catalogo.mjs
+
+      - name: Comprobar si hay cambios en el catálogo
+        id: git-check
+        run: |
+          git status --porcelain js/catalog-data.js
+          if [ -n "$(git status --porcelain js/catalog-data.js)" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Guardar cambios si el catálogo se actualizó
+        if: steps.git-check.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add js/catalog-data.js
+          git commit -m "Auto: Actualización de catálogo de zapatillas [skip ci]"
+          git push

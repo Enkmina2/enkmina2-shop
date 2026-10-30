@@ -35,15 +35,41 @@ Diseñado con una estética moderna, limpia y comercial (estilo tienda online de
 ```text
 Zapatillas-Shop/
 │
-├── logo.png            # Logotipo original oficial de ENKMINA2
-├── index.html          # Estructura semántica HTML5 principal
-├── css/
-│   └── style.css       # Estilos modernos, diseño responsive y temas
+├── data/
+│   └── catalogo.csv            # Fuente editable: introduce aquí los ASIN de Amazon.es
+├── scripts/
+│   └── actualizar-catalogo.mjs # Script para validar ASINs y generar el catálogo
 ├── js/
-│   ├── products.js     # Base de datos de productos (enlaces y precios demostrativos)
-│   └── app.js          # Lógica interactiva de filtros, buscador y modales
-└── README.md           # Guía de uso, personalización y despliegue
+│   ├── catalog-core.js         # Lógica central: validación ASIN, reglas de precio y filtros
+│   ├── catalog-data.js         # Catálogo real compilado (generado automáticamente)
+│   ├── products.js             # 16 productos de muestra identificados como 'demo'
+│   └── app.js                  # Interfaz: renderizado seguro, buscador, filtros y modales
+├── css/
+│   └── style.css               # Estilos modernos y diseño responsive
+├── logo.png                    # Logotipo original oficial de ENKMINA2
+├── index.html                  # Página principal
+└── README.md                   # Esta documentación
 ```
+
+---
+
+## 👟 Cómo añadir productos reales de Amazon.es
+
+Para incorporar zapatillas con tu enlace de afiliado oficial (`enkmina2shop-21`):
+
+1. Abre el archivo **`data/catalogo.csv`** (puedes editarlo en local o directamente en GitHub).
+2. Añade una línea por producto con el siguiente formato:
+   ```csv
+   asin,categoria,marca,modelo,destacado,imagen_sitestripe
+   B08N5WRWNW,running,Nike,Revolution 6,si,
+   ```
+3. Ejecuta el compilador local:
+   ```bash
+   node scripts/actualizar-catalogo.mjs
+   ```
+4. El script validará el formato del ASIN (10 caracteres alfanuméricos), generará el enlace oficial `https://www.amazon.es/dp/{ASIN}?tag=enkmina2shop-21` y compilará **`js/catalog-data.js`**.
+5. Los productos reales aparecerán en la web como **«Pendiente de verificar»** y con el aviso «Precio no disponible: consúltalo en Amazon», cumpliendo estrictamente con la normativa de Amazon que prohíbe escribir precios a mano.
+6. Cuando dispongas de acceso a la Creators API de Amazon, una acción automatizada rellenará los precios y las imágenes oficiales cada 24 horas.
 
 ---
 
@@ -64,26 +90,6 @@ Al tratarse de una web estática pura (HTML, CSS y JavaScript sin dependencias p
 
 ---
 
-## 🔗 Cómo personalizar los enlaces de afiliado
-
-Todos los enlaces de oferta son de demostración y están centralizados en el archivo:
-📂 `js/products.js`
-
-Cada producto cuenta con el parámetro `affiliateUrl`:
-```javascript
-{
-  id: 1,
-  name: "Air Jordan 1 Retro High OG",
-  brand: "Jordan",
-  // ...
-  affiliateUrl: "https://ejemplo-afiliado.com/oferta/air-jordan-1-retro?ref=zapatillasshop",
-  store: "Nike Store Oficial"
-}
-```
-Para sustituirlos por tus enlaces reales de plataformas de afiliados (como Amazon Afiliados, Awin, Nike Affiliate Program, CJ Affiliate, etc.), solo debes cambiar la URL en `affiliateUrl` por tu enlace de afiliado personal.
-
----
-
 ## 🌐 Publicación en GitHub Pages
 
 1. **Repositorio**: `https://github.com/Enkmina2/enkmina2-shop`
@@ -96,6 +102,8 @@ Para sustituirlos por tus enlaces reales de plataformas de afiliados (como Amazo
 
 ---
 
-## ⚖️ Aviso Legal y Afiliación
+## ⚖️ Aviso Legal y Afiliación Oficial de Amazon
 
-Los datos, ofertas y enlaces incluidos en este proyecto se proporcionan con fines demostrativos. Zapatillas Shop está preparado para cumplir con los estándares de divulgación comercial del FTC y de la Unión Europea sobre transparencia en enlaces de afiliación.
+«En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.»
+
+ENKMINA2 SHOP participa en el Programa de Afiliados de Amazon.es (ID: `enkmina2shop-21`). Los precios y la disponibilidad mostrados en Amazon.es en el momento de la compra regirán la transacción. Los productos señalados como «Demostración» son muestras de diseño y no representan ofertas comerciales activas.

@@ -1,0 +1,13 @@
+# ENKMINA2 SHOP - Catálogo de productos reales (Amazon.es)
+# Instrucciones:
+# - Añade un producto por línea con el formato: asin,categoria,marca,modelo,destacado,imagen_sitestripe
+# - asin: Identificador de 10 caracteres alfanuméricos de Amazon.es (obligatorio para productos reales)
+# - categoria: running | baloncesto | urbano | novedades
+# - marca: Nike | Adidas | Jordan | New Balance | Puma | Asics | etc.
+# - modelo: Nombre o modelo de la zapatilla
+# - destacado: si | no (opcional, por defecto 'no')
+# - imagen_sitestripe: URL de imagen oficial obtenida mediante SiteStripe o API (opcional)
+asin,categoria,marca,modelo,destacado,imagen_sitestripe
+B077MJJMQL,urbano,Puma,Smash v2 L,si,
+B098PG98N2,running,Nike,Revolution 6,si,
+B0CKRZWSSV,running,Adidas,Runfalcon 5,si,

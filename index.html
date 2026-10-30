@@ -138,21 +138,21 @@
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
-                <span>Marcas 100% Originales</span>
+                <span>Enlaces directos a Amazon.es</span>
               </div>
               <div class="trust-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="12" y1="1" x2="12" y2="23"></line>
                   <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                 </svg>
-                <span>Precios orientativos al día</span>
+                <span>Precios verificados en Amazon</span>
               </div>
               <div class="trust-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                 </svg>
-                <span>Enlaces transparentes</span>
+                <span>Transparencia de afiliación</span>
               </div>
             </div>
           </div>
@@ -160,20 +160,20 @@
           <!-- Tarjeta visual de producto destacado -->
           <div class="hero-visual">
             <div class="hero-card">
-              <span class="hero-card-badge">Destacado de la semana</span>
+              <span class="hero-card-badge" style="background-color: #4b5563;">Modelo de referencia</span>
               <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80" 
                    alt="Air Jordan 1 Retro High OG"
                    loading="eager"
                    onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20400%22%3E%3Crect%20width%3D%22400%22%20height%3D%22400%22%20fill%3D%22%23eee%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%3EAir%20Jordan%201%3C%2Ftext%3E%3C%2Fsvg%3E';">
               <div class="hero-card-info">
                 <h3>Air Jordan 1 Retro High OG</h3>
-                <p>El icono atemporal del baloncesto y la moda streetwear.</p>
+                <p>Silueta clásica del baloncesto y la moda streetwear (muestra de diseño).</p>
                 <div class="hero-card-meta">
-                  <div class="hero-card-price">
-                    169.99 € <small>189.99 €</small>
+                  <div style="font-size: 0.88rem; color: #6b7280; font-style: italic;">
+                    Muestra de catálogo
                   </div>
-                  <button class="btn-primary" style="padding: 0.6rem 1.1rem; font-size: 0.85rem;" onclick="openOfferModal(1)">
-                    Ver oferta
+                  <button class="btn-primary" style="padding: 0.6rem 1.1rem; font-size: 0.85rem;" onclick="openProductModal('demo-1')">
+                    Ver detalles
                   </button>
                 </div>
               </div>
@@ -217,11 +217,10 @@
             <!-- Selector de ordenación -->
             <div class="sort-select-wrapper">
               <select id="sortBySelect" aria-label="Ordenar productos">
-                <option value="featured">Destacados</option>
+                <option value="featured">Destacados (Reales primero)</option>
+                <option value="name">Nombre (A - Z)</option>
                 <option value="price-asc">Precio: de menor a mayor</option>
                 <option value="price-desc">Precio: de mayor a menor</option>
-                <option value="discount">Mayor descuento (%)</option>
-                <option value="rating">Mejor valorados</option>
               </select>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -320,10 +319,13 @@
             <line x1="12" y1="16" x2="12" y2="12"></line>
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
-          Aviso de Transparencia y Afiliación
+          Aviso de Transparencia y Afiliación Oficial de Amazon
         </h4>
+        <p style="font-size: 0.92rem; color: #fff; font-weight: 600; margin-bottom: 0.6rem;">
+          «En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.»
+        </p>
         <p>
-          <strong>ENKMINA2 SHOP</strong> («Camina con propósito») es un sitio web de catálogo, análisis y recomendación independiente. Participamos en programas de afiliación de tiendas oficiales y distribuidores autorizados de calzado deportivo. Esto significa que podemos recibir una comisión por las compras realizadas a través de los enlaces señalados como «Ver oferta», <strong>sin ningún coste adicional ni recargo para el comprador</strong>. Los precios, modelos y disponibilidad mostrados son de carácter orientativo y corresponden a la información recopilada en distribuidores colaboradores.
+          <strong>ENKMINA2 SHOP</strong> («Camina con propósito») participa en el Programa de Afiliados de Amazon.es (ID: <code>enkmina2shop-21</code>). Los enlaces con destino a Amazon permiten generar comisiones sin ningún coste adicional para el comprador. Los precios y la disponibilidad son fijados por Amazon en el momento de la compra. Los modelos señalados como «Demostración» son muestras estéticas y no representan ofertas comerciales activas.
         </p>
       </div>
 
@@ -413,7 +415,9 @@
   </div>
 
   <!-- Scripts -->
+  <script src="./js/catalog-core.js"></script>
   <script src="./js/products.js"></script>
+  <script src="./js/catalog-data.js"></script>
   <script src="./js/app.js"></script>
 </body>
 </html>

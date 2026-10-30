@@ -1,352 +1,177 @@
 /**
- * Zapatillas Shop - Base de datos de demostración
- * Todos los enlaces son de demostración y fácilmente sustituibles por enlaces de afiliados reales.
- * Para cambiar un enlace, edite la propiedad 'affiliateUrl' de cada producto.
+ * ENKMINA2 SHOP - Productos de DEMOSTRACIÓN
+ *
+ * Estos 16 productos se conservan solo para mantener el diseño del catálogo
+ * mientras se incorporan productos reales verificados.
+ *
+ * - NO son ofertas reales.
+ * - NO tienen precio, descuento, valoraciones ni enlace de afiliado.
+ * - Las imágenes son ilustrativas (Unsplash) y pueden no corresponder al modelo indicado.
+ * - Los textos descriptivos son de ejemplo y no están verificados.
+ *
+ * La versión original completa (con los datos ficticios de precios y valoraciones)
+ * se conserva en _backup/2026-10-30/js/products.js.
+ *
+ * Los productos REALES no se añaden aquí: se añaden en data/catalogo.csv
+ * y se generan con `node scripts/actualizar-catalogo.mjs`.
  */
 
-const PRODUCTS_DATA = [
+const DEMO_PRODUCTS = [
   {
-    id: 1,
+    id: "demo-1",
     name: "Air Jordan 1 Retro High OG",
     brand: "Jordan",
-    category: "baloncesto",
     categories: ["baloncesto", "urbano", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    priceOriginal: 189.99,
-    priceCurrent: 169.99,
-    discountPercentage: 11,
-    rating: 4.9,
-    reviewsCount: 342,
-    badge: "Top Ventas",
+    featured: true,
     image: "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80",
-    description: "El clásico inmortal del baloncesto reconvertido en icono de la moda urbana. Amortiguación Air-Sole encapsulada y confección en piel premium.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/air-jordan-1-retro?ref=zapatillasshop",
-    store: "Nike Store Oficial (Demo)",
-    sizes: ["40", "41", "42", "42.5", "43", "44", "45"],
-    color: "Rojo / Negro / Blanco"
+    description: "Texto de ejemplo: silueta clásica de baloncesto muy utilizada como zapatilla urbana."
   },
   {
-    id: 2,
-    name: "Nike Air Max 270 Flyknit",
+    id: "demo-2",
+    name: "Nike Air Max 270",
     brand: "Nike",
-    category: "urbano",
     categories: ["urbano", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    priceOriginal: 159.99,
-    priceCurrent: 129.95,
-    discountPercentage: 19,
-    rating: 4.8,
-    reviewsCount: 512,
-    badge: "Super Oferta",
+    featured: true,
     image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
-    description: "Mayor unidad Max Air en el talón para una pisada ultrasuave que parece flotar. Tejido superior transpirable perfecto para el día a día.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/nike-air-max-270?ref=zapatillasshop",
-    store: "Zalando Partner (Demo)",
-    sizes: ["39", "40", "41", "42", "43", "44"],
-    color: "Rojo Carmín / Blanco"
+    description: "Texto de ejemplo: zapatilla de estilo urbano con cámara de aire visible en el talón."
   },
   {
-    id: 3,
+    id: "demo-3",
     name: "Adidas Ultraboost Light",
     brand: "Adidas",
-    category: "running",
     categories: ["running", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    priceOriginal: 199.99,
-    priceCurrent: 149.90,
-    discountPercentage: 25,
-    rating: 4.9,
-    reviewsCount: 420,
-    badge: "Recomendado Running",
-    image: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=800&q=80",
-    description: "La zapatilla de running con retorno de energía legendario Boost. Un 30% más ligera con suela Continental para agarre superior en asfalto húmedo.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/adidas-ultraboost-light?ref=zapatillasshop",
-    store: "Adidas Oficial (Demo)",
-    sizes: ["40", "41", "42", "43", "44", "45", "46"],
-    color: "Negro Core / Blanco"
+    featured: true,
+    image: "",
+    description: "Texto de ejemplo: zapatilla de running con mediasuela amortiguada."
   },
   {
-    id: 4,
+    id: "demo-4",
     name: "New Balance 550 Vintage White",
     brand: "New Balance",
-    category: "urbano",
     categories: ["urbano", "baloncesto", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    priceOriginal: 140.00,
-    priceCurrent: 119.00,
-    discountPercentage: 15,
-    rating: 4.7,
-    reviewsCount: 289,
-    badge: "Tendencia",
-    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80",
-    description: "Tributo al baloncesto profesional de 1989 y la cultura skate. Silueta limpia y estilizada de cuero genuino que combina con todo.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/new-balance-550?ref=zapatillasshop",
-    store: "Foot District (Demo)",
-    sizes: ["38", "39", "40", "41", "42", "43", "44"],
-    color: "Blanco Sal / Verde Bosque"
+    featured: true,
+    image: "",
+    description: "Texto de ejemplo: modelo de inspiración retro procedente del baloncesto."
   },
   {
-    id: 5,
-    name: "Nike Air Force 1 '07 All White",
+    id: "demo-5",
+    name: "Nike Air Force 1 '07",
     brand: "Nike",
-    category: "urbano",
     categories: ["urbano"],
-    isNew: false,
-    isFeatured: true,
-    priceOriginal: 119.99,
-    priceCurrent: 109.99,
-    discountPercentage: 8,
-    rating: 4.9,
-    reviewsCount: 1420,
-    badge: "Clásico Eterno",
+    featured: true,
     image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80",
-    description: "El icono de las pistas de basket de 1982 que conquistó el hip-hop y las calles del mundo. Cuero impecable y amortiguación Nike Air duradera.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/nike-air-force-1?ref=zapatillasshop",
-    store: "Nike Store (Demo)",
-    sizes: ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45"],
-    color: "Triple White"
+    description: "Texto de ejemplo: clásico de la calle con origen en las pistas de baloncesto."
   },
   {
-    id: 6,
-    name: "Puma MB.02 Rick & Morty / LaMelo",
+    id: "demo-6",
+    name: "Puma MB.02",
     brand: "Puma",
-    category: "baloncesto",
     categories: ["baloncesto", "novedades"],
-    isNew: true,
-    isFeatured: false,
-    priceOriginal: 150.00,
-    priceCurrent: 124.95,
-    discountPercentage: 17,
-    rating: 4.8,
-    reviewsCount: 178,
-    badge: "Edición Limitada",
-    image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80",
-    description: "La zapatilla signature de LaMelo Ball con tecnología NITRO Foam para saltos explosivos y amortiguación receptiva en la cancha.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/puma-mb02?ref=zapatillasshop",
-    store: "Puma Flagship (Demo)",
-    sizes: ["41", "42", "43", "44", "45"],
-    color: "Volt / Coral Explosivo"
+    featured: false,
+    image: "",
+    description: "Texto de ejemplo: zapatilla de baloncesto de la línea signature de LaMelo Ball."
   },
   {
-    id: 7,
-    name: "Asics Gel-Kayano 30 Running",
+    id: "demo-7",
+    name: "Asics Gel-Kayano 30",
     brand: "Asics",
-    category: "running",
     categories: ["running"],
-    isNew: false,
-    isFeatured: true,
-    priceOriginal: 200.00,
-    priceCurrent: 159.90,
-    discountPercentage: 20,
-    rating: 4.9,
-    reviewsCount: 310,
-    badge: "Máxima Amortiguación",
-    image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=800&q=80",
-    description: "Estabilidad adaptativa 4D GUIDANCE SYSTEM™ y tecnología PureGEL™ para transiciones suaves e impacto reducido en maratón y entrenamientos largos.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/asics-gel-kayano-30?ref=zapatillasshop",
-    store: "RunnerInn (Demo)",
-    sizes: ["40.5", "41.5", "42", "42.5", "43.5", "44", "45"],
-    color: "Azul Eléctrico / Naranja"
+    featured: true,
+    image: "",
+    description: "Texto de ejemplo: zapatilla de running orientada a la estabilidad."
   },
   {
-    id: 8,
-    name: "Nike Dunk Low Retro Panda",
+    id: "demo-8",
+    name: "Nike Dunk Low Retro",
     brand: "Nike",
-    category: "urbano",
     categories: ["urbano", "baloncesto"],
-    isNew: false,
-    isFeatured: true,
-    priceOriginal: 129.99,
-    priceCurrent: 114.99,
-    discountPercentage: 12,
-    rating: 4.8,
-    reviewsCount: 890,
-    badge: "Favorito Urbano",
-    image: "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?auto=format&fit=crop&w=800&q=80",
-    description: "Creada para las canchas universitarias y adoptada por el streetwear contemporáneo. Contraste blanco y negro versátil con zona del tobillo acolchada.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/nike-dunk-low-panda?ref=zapatillasshop",
-    store: "Snipes Partner (Demo)",
-    sizes: ["38", "39", "40", "41", "42", "43", "44"],
-    color: "Blanco / Negro"
+    featured: true,
+    image: "",
+    description: "Texto de ejemplo: silueta baja de origen universitario, muy usada en estilo urbano."
   },
   {
-    id: 9,
-    name: "Nike Zoom Freak 5 (Giannis)",
+    id: "demo-9",
+    name: "Nike Zoom Freak 5",
     brand: "Nike",
-    category: "baloncesto",
     categories: ["baloncesto"],
-    isNew: false,
-    isFeatured: false,
-    priceOriginal: 139.99,
-    priceCurrent: 99.95,
-    discountPercentage: 29,
-    rating: 4.7,
-    reviewsCount: 165,
-    badge: "Gran Descuento",
-    image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?auto=format&fit=crop&w=800&q=80",
-    description: "Diseñadas para la velocidad supersónica de Giannis Antetokounmpo. Tracción multidireccional que frena en seco y permite giros vertiginosos.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/nike-zoom-freak-5?ref=zapatillasshop",
-    store: "Foot Locker (Demo)",
-    sizes: ["41", "42", "43", "44", "45", "46"],
-    color: "Gris Platino / Verde Lima"
+    featured: false,
+    image: "",
+    description: "Texto de ejemplo: zapatilla de baloncesto de la línea de Giannis Antetokounmpo."
   },
   {
-    id: 10,
-    name: "New Balance Fresh Foam X 1080v13",
+    id: "demo-10",
+    name: "New Balance Fresh Foam X 1080",
     brand: "New Balance",
-    category: "running",
     categories: ["running", "novedades"],
-    isNew: true,
-    isFeatured: false,
-    priceOriginal: 190.00,
-    priceCurrent: 152.00,
-    discountPercentage: 20,
-    rating: 4.9,
-    reviewsCount: 240,
-    badge: "Confort Premium",
-    image: "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
-    description: "Si New Balance solo fabricara una zapatilla de running, sería la 1080. Amortiguación Fresh Foam X inigualable con empeine de malla transpirable.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/nb-fresh-foam-1080?ref=zapatillasshop",
-    store: "New Balance Oficial (Demo)",
-    sizes: ["40", "41", "42", "43", "44", "45"],
-    color: "Gris Clásico NB / Blanco"
+    featured: false,
+    image: "",
+    description: "Texto de ejemplo: zapatilla de running con amortiguación Fresh Foam."
   },
   {
-    id: 11,
+    id: "demo-11",
     name: "Air Jordan 4 Retro SE Craft",
     brand: "Jordan",
-    category: "baloncesto",
     categories: ["baloncesto", "urbano", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    priceOriginal: 219.99,
-    priceCurrent: 199.99,
-    discountPercentage: 9,
-    rating: 5.0,
-    reviewsCount: 460,
-    badge: "Colección Hype",
-    image: "https://images.unsplash.com/photo-1512374382149-233c42b661ac?auto=format&fit=crop&w=800&q=80",
-    description: "La legendaria silueta de Tinker Hatfield confeccionada con mezcla artesanal de ante y cuero de primera calidad. Una joya para coleccionistas.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/air-jordan-4-retro?ref=zapatillasshop",
-    store: "StockX Partner (Demo)",
-    sizes: ["40", "41", "42", "43", "44", "45", "46"],
-    color: "Gris Piedra / Vainilla"
+    featured: true,
+    image: "",
+    description: "Texto de ejemplo: modelo retro de la línea Jordan."
   },
   {
-    id: 12,
-    name: "Adidas Forum Low Classic",
+    id: "demo-12",
+    name: "Adidas Forum Low",
     brand: "Adidas",
-    category: "urbano",
     categories: ["urbano"],
-    isNew: false,
-    isFeatured: false,
-    priceOriginal: 110.00,
-    priceCurrent: 84.95,
-    discountPercentage: 23,
-    rating: 4.7,
-    reviewsCount: 380,
-    badge: "Mejor Precio",
-    image: "https://images.unsplash.com/photo-1518002171953-a080ee817e1f?auto=format&fit=crop&w=800&q=80",
-    description: "Mucho más que una zapatilla de basket: un statement de los 80. Detalle característico en 'X' en el tobillo y suela de goma vintage.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/adidas-forum-low?ref=zapatillasshop",
-    store: "JD Sports (Demo)",
-    sizes: ["39", "40", "41", "42", "43", "44", "45"],
-    color: "Blanco Vintage / Azul Marino"
+    featured: false,
+    image: "",
+    description: "Texto de ejemplo: silueta de los años 80 con tira en el tobillo."
   },
   {
-    id: 13,
-    name: "Nike Pegasus 40 Road Running",
+    id: "demo-13",
+    name: "Nike Pegasus 40",
     brand: "Nike",
-    category: "running",
     categories: ["running"],
-    isNew: false,
-    isFeatured: false,
-    priceOriginal: 130.00,
-    priceCurrent: 97.50,
-    discountPercentage: 25,
-    rating: 4.8,
-    reviewsCount: 920,
-    badge: "Caballo de Batalla",
-    image: "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=800&q=80",
-    description: "40 años acompañando a corredores de todo el planeta. Doble unidad Zoom Air y espuma React para una zapatilla incansable en asfalto y tierra.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/nike-pegasus-40?ref=zapatillasshop",
-    store: "Nike Store (Demo)",
-    sizes: ["40", "41", "42", "43", "44", "45"],
-    color: "Negro Obsidiana / Blanco"
+    featured: false,
+    image: "",
+    description: "Texto de ejemplo: zapatilla de running polivalente para entrenamiento diario."
   },
   {
-    id: 14,
-    name: "Puma Suede Classic XXI",
+    id: "demo-14",
+    name: "Puma Suede Classic",
     brand: "Puma",
-    category: "urbano",
     categories: ["urbano"],
-    isNew: false,
-    isFeatured: false,
-    priceOriginal: 85.00,
-    priceCurrent: 64.99,
-    discountPercentage: 24,
-    rating: 4.6,
-    reviewsCount: 610,
-    badge: "Icono Retro",
+    featured: false,
     image: "https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?auto=format&fit=crop&w=800&q=80",
-    description: "Desde su debut en 1968, ha vestido a b-boys, atletas y artistas. Ante suave con la franja característica de Puma en contraste.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/puma-suede-classic?ref=zapatillasshop",
-    store: "Amazon Moda (Demo)",
-    sizes: ["37", "38", "39", "40", "41", "42", "43", "44"],
-    color: "Negro / Blanco Marfil"
+    description: "Texto de ejemplo: clásico de ante con la franja característica de Puma."
   },
   {
-    id: 15,
-    name: "Asics Novablast 4 Performance",
+    id: "demo-15",
+    name: "Asics Novablast 4",
     brand: "Asics",
-    category: "running",
     categories: ["running", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    priceOriginal: 150.00,
-    priceCurrent: 134.90,
-    discountPercentage: 10,
-    rating: 4.9,
-    reviewsCount: 195,
-    badge: "Rebote Dinámico",
-    image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=800&q=80",
-    description: "Espuma FF BLAST™ PLUS ECO para un despegue enérgico tipo trampolín. Ideal para corredores que buscan ritmo vivo y ligereza extrema.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/asics-novablast-4?ref=zapatillasshop",
-    store: "Top4Running (Demo)",
-    sizes: ["41", "42", "42.5", "43", "44", "45"],
-    color: "Blanco Ópalo / Amarillo Lima"
+    featured: true,
+    image: "",
+    description: "Texto de ejemplo: zapatilla de running de perfil dinámico."
   },
   {
-    id: 16,
-    name: "Jordan Luka 2 'Space Hunter'",
+    id: "demo-16",
+    name: "Jordan Luka 2",
     brand: "Jordan",
-    category: "baloncesto",
     categories: ["baloncesto"],
-    isNew: false,
-    isFeatured: false,
-    priceOriginal: 140.00,
-    priceCurrent: 112.00,
-    discountPercentage: 20,
-    rating: 4.8,
-    reviewsCount: 145,
-    badge: "Control de Ritmo",
-    image: "https://images.unsplash.com/photo-1579338559194-a162d19bf842?auto=format&fit=crop&w=800&q=80",
-    description: "Inspirada en el step-back de Luka Dončić. Estructura envolvente de 360 grados para frenadas laterales y control absoluto de la gravedad.",
-    affiliateUrl: "https://ejemplo-afiliado.com/oferta/jordan-luka-2?ref=zapatillasshop",
-    store: "Nike Basketball (Demo)",
-    sizes: ["41", "42", "43", "44", "45", "46"],
-    color: "Negro / Morado Cósmico"
+    featured: false,
+    image: "",
+    description: "Texto de ejemplo: zapatilla de baloncesto de la línea de Luka Dončić."
   }
-];
+].map(p => ({
+  ...p,
+  status: "demo",          // demo | pendiente | verificado
+  source: "demo",
+  asin: null,
+  url: null,               // sin enlace: no es una oferta real
+  price: null,             // sin precio: no se inventa
+  priceFetchedAt: null
+}));
 
-// Marcas disponibles
-const AVAILABLE_BRANDS = ["Todas", "Nike", "Adidas", "Jordan", "New Balance", "Puma", "Asics"];
-
-// Categorías disponibles
+// Categorías del catálogo (fijas)
 const AVAILABLE_CATEGORIES = [
   { id: "todas", label: "Todas las zapatillas" },
   { id: "novedades", label: "Novedades" },
@@ -355,14 +180,11 @@ const AVAILABLE_CATEGORIES = [
   { id: "urbano", label: "Estilo Urbano" }
 ];
 
-// Compatibilidad con entorno navegador y Node.js para testing
 if (typeof window !== "undefined") {
-  window.PRODUCTS_DATA = PRODUCTS_DATA;
-  window.AVAILABLE_BRANDS = AVAILABLE_BRANDS;
+  window.DEMO_PRODUCTS = DEMO_PRODUCTS;
   window.AVAILABLE_CATEGORIES = AVAILABLE_CATEGORIES;
 }
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { PRODUCTS_DATA, AVAILABLE_BRANDS, AVAILABLE_CATEGORIES };
+  module.exports = { DEMO_PRODUCTS, AVAILABLE_CATEGORIES };
 }
-
