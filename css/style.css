@@ -1075,7 +1075,7 @@ input, select, textarea {
 
 /* Etiqueta «Imagen de ambiente» que añade app.js: no se muestra */
 .amb-note {
-  display: none;
+  display: none !important;
 }
 
 .amb-overlay {
