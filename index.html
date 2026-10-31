@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ENKMINA2 SHOP - Camina con propósito. Catálogo especializado en zapatillas deportivas de las mejores marcas: Nike, Adidas, Jordan, New Balance, Puma y Asics.">
+  <meta name="description" content="ENKMINA2 SHOP - Camina con propósito. Catálogo especializado en zapatillas deportivas elegidas de los más vendidos de Amazon.es: adidas, Nike, Puma, Asics, Jordan, Skechers y Under Armour.">
   <meta name="theme-color" content="#0f1115">
   <title>ENKMINA2 SHOP | Camina con propósito</title>
   
@@ -46,7 +46,7 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </span>
-          <input type="text" id="headerSearchInput" placeholder="Buscar por modelo, marca (Nike, Jordan, New Balance...)" aria-label="Buscar zapatillas">
+          <input type="text" id="headerSearchInput" placeholder="Buscar por modelo o marca (adidas, Nike, Skechers...)" aria-label="Buscar zapatillas">
           <button id="clearSearchBtn" class="clear-btn" aria-label="Limpiar búsqueda">✕</button>
         </div>
 
@@ -92,7 +92,7 @@
       <li><a href="javascript:void(0)" onclick="openPolicyModal('contacto')">Contacto y Dudas <span>→</span></a></li>
     </ul>
     <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--color-border); font-size: 0.85rem; color: var(--color-gray-medium);">
-      Marcas oficiales analizadas: Nike, Adidas, Jordan, New Balance, Puma y Asics.
+      Marcas del catálogo: adidas, Nike, Puma, Asics, Jordan, Skechers y Under Armour.
     </div>
   </div>
 
@@ -159,23 +159,9 @@
 
           <!-- Tarjeta visual de producto destacado -->
           <div class="hero-visual">
-            <div class="hero-card">
-              <span class="hero-card-badge">Destacado de la semana</span>
-              <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80" 
-                   alt="Air Jordan 1 Retro High OG"
-                   loading="eager"
-                   onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20400%22%3E%3Crect%20width%3D%22400%22%20height%3D%22400%22%20fill%3D%22%23eee%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%3EAir%20Jordan%201%3C%2Ftext%3E%3C%2Fsvg%3E';">
-              <span class="img-note">Imagen ilustrativa</span>
-              <div class="hero-card-info">
-                <h3>Air Jordan 1 Retro High OG</h3>
-                <p>El icono atemporal del baloncesto y la moda streetwear.</p>
-                <div class="hero-card-meta">
-                  <a href="javascript:void(0)" class="hero-card-details" onclick="openOfferModal(1)">Ver detalles</a>
-                  <a id="heroAmazonBtn" href="https://www.amazon.es/s?k=Air%20Jordan%201%20Retro%20High%20OG&amp;tag=enkmina2shop-21" target="_blank" rel="nofollow sponsored noopener" class="btn-primary" style="padding: 0.6rem 1.1rem; font-size: 0.85rem;">
-                    Ver en Amazon
-                  </a>
-                </div>
-              </div>
+            <div class="hero-card" id="heroCard">
+              <!-- Rellenado por app.js con el producto destacado (HERO_PRODUCT_ID) -->
+            </div>
             </div>
           </div>
 
@@ -239,9 +225,9 @@
       <div class="container">
         <div class="showcase-banner">
           <div class="showcase-banner-content">
-            <span class="showcase-tag">Lanzamientos Recientes</span>
+            <span class="showcase-tag">Nuevas versiones</span>
             <h2>Novedades y Nuevas Siluetas</h2>
-            <p>Descubre las últimas incorporaciones al mercado: innovaciones de retorno de energía, amortiguaciones avanzadas y colaboraciones de edición limitada.</p>
+            <p>Las nuevas versiones de dos de las zapatillas de running más vendidas en Amazon.es: la adidas Galaxy 8 y la Runfalcon 6, que sustituyen a la Galaxy 7 y la Runfalcon 5.</p>
             <button class="btn-white" onclick="setCategory('novedades', true)">
               Explorar solo novedades
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -258,7 +244,7 @@
           <div class="showcase-banner-content">
             <span class="showcase-tag">Alto Rendimiento</span>
             <h2>Especial Zapatillas de Running</h2>
-            <p>Diseñadas para devorar kilómetros sobre asfalto o tierra. Amortiguación reactiva, espumas de densidad variable y suelas de máximo agarre para tus entrenamientos y maratones.</p>
+            <p>Las zapatillas de running que más se venden en Amazon.es para hombre y mujer: adidas, Asics, Under Armour y Nike.</p>
             <button class="btn-white" onclick="setCategory('running', true)">
               Ver gama Running
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -275,7 +261,7 @@
           <div class="showcase-banner-content">
             <span class="showcase-tag">En la Cancha y en la Calle</span>
             <h2>Baloncesto: Fuerza, Salto y Agarre</h2>
-            <p>Modelos icónicos de la NBA y las pistas de playground. Sujeción de tobillo, tracción multidireccional y las siluetas de estrellas como Michael Jordan, Luka Dončić o Giannis.</p>
+            <p>Los modelos más vendidos de la lista de baloncesto de Amazon.es: adidas Own The Game 3, Nike Court Vision Low, Puma Court Pro 3 y Jordan Tatum 3.</p>
             <button class="btn-white" onclick="setCategory('baloncesto', true)">
               Ver zapatillas Baloncesto
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -292,7 +278,7 @@
           <div class="showcase-banner-content">
             <span class="showcase-tag">Lifestyle & Streetwear</span>
             <h2>Estilo Urbano y Siluetas Retro</h2>
-            <p>Desde las clásicas Air Force 1 y New Balance 550 hasta las Puma Suede y Dunk Low. El calzado indispensable para vestir a diario con elegancia y comodidad sin esfuerzo.</p>
+            <p>Zapatillas para el día a día de Skechers, adidas y Puma, elegidas entre las más vendidas de Amazon.es para hombre y mujer.</p>
             <button class="btn-white" onclick="setCategory('urbano', true)">
               Ver estilo Urbano
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -320,7 +306,7 @@
         </h4>
         <p class="amazon-disclosure"><strong>«En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.»</strong></p>
         <p>
-          <strong>ENKMINA2 SHOP</strong> («Camina con propósito») es un catálogo independiente de calzado deportivo que participa en el Programa de Afiliados de Amazon.es. Los botones «Ver en Amazon» son enlaces de afiliado: si compras a través de ellos podemos recibir una comisión, <strong>sin ningún coste adicional para ti</strong>. El precio y la disponibilidad son los que indique Amazon.es en el momento de la compra. Las imágenes son ilustrativas.
+          <strong>ENKMINA2 SHOP</strong> («Camina con propósito») es un catálogo independiente de calzado deportivo que participa en el Programa de Afiliados de Amazon.es. Los botones «Ver en Amazon» son enlaces de afiliado: si compras a través de ellos podemos recibir una comisión, <strong>sin ningún coste adicional para ti</strong>. El precio, las tallas y la disponibilidad son los que indique Amazon.es en el momento de la compra. No mostramos fotos de producto: consulta las imágenes oficiales en Amazon.es.
         </p>
       </div>
 
@@ -334,7 +320,7 @@
               <span style="font-size: 0.75rem; color: #9ca3af; font-weight: 600;">Camina con propósito</span>
             </div>
           </div>
-          <p>Tu punto de encuentro para descubrir y elegir las zapatillas deportivas más deseadas de Nike, Adidas, Jordan, New Balance, Puma y Asics, y encontrarlas en Amazon.es.</p>
+          <p>Tu punto de encuentro para descubrir y elegir zapatillas deportivas elegidas de los más vendidos de Amazon.es: adidas, Nike, Puma, Asics, Jordan, Skechers y Under Armour.</p>
           <div style="font-size: 0.8rem; color: #6b7280;">
             Sitio web preparado para publicación estática en GitHub Pages.
           </div>
@@ -344,7 +330,7 @@
           <h4>Categorías</h4>
           <ul class="footer-links">
             <li><a href="#catalogo" onclick="setCategory('todas')">Todas las zapatillas</a></li>
-            <li><a href="#novedades" onclick="setCategory('novedades', true); return false;">Novedades 2026</a></li>
+            <li><a href="#novedades" onclick="setCategory('novedades', true); return false;">Novedades</a></li>
             <li><a href="#running" onclick="setCategory('running', true); return false;">Zapatillas Running</a></li>
             <li><a href="#baloncesto" onclick="setCategory('baloncesto', true); return false;">Baloncesto & Court</a></li>
             <li><a href="#urbano" onclick="setCategory('urbano', true); return false;">Estilo Urbano & Casual</a></li>
@@ -354,12 +340,13 @@
         <div class="footer-col">
           <h4>Marcas Destacadas</h4>
           <ul class="footer-links">
+            <li><a href="#catalogo" onclick="setBrand('adidas')">Zapatillas adidas</a></li>
             <li><a href="#catalogo" onclick="setBrand('Nike')">Zapatillas Nike</a></li>
-            <li><a href="#catalogo" onclick="setBrand('Adidas')">Zapatillas Adidas</a></li>
-            <li><a href="#catalogo" onclick="setBrand('Jordan')">Air Jordan</a></li>
-            <li><a href="#catalogo" onclick="setBrand('New Balance')">New Balance Classics</a></li>
-            <li><a href="#catalogo" onclick="setBrand('Puma')">Puma Hoops & Suede</a></li>
-            <li><a href="#catalogo" onclick="setBrand('Asics')">Asics Gel Running</a></li>
+            <li><a href="#catalogo" onclick="setBrand('Puma')">Zapatillas Puma</a></li>
+            <li><a href="#catalogo" onclick="setBrand('Asics')">Zapatillas Asics</a></li>
+            <li><a href="#catalogo" onclick="setBrand('Jordan')">Zapatillas Jordan</a></li>
+            <li><a href="#catalogo" onclick="setBrand('Skechers')">Zapatillas Skechers</a></li>
+            <li><a href="#catalogo" onclick="setBrand('Under Armour')">Zapatillas Under Armour</a></li>
           </ul>
         </div>
 

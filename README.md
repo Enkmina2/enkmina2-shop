@@ -1,7 +1,7 @@
 # ENKMINA2 SHOP 👟
 ### *«Camina con propósito»*
 
-Sitio web profesional especializado en zapatillas deportivas de marcas reconocidas (**Nike, Adidas, Jordan, New Balance, Puma y Asics**), con identidad visual oficial de **ENKMINA2**.
+Sitio web profesional especializado en zapatillas deportivas de marcas reconocidas (**adidas, Nike, Puma, Asics, Jordan, Skechers y Under Armour**), con identidad visual oficial de **ENKMINA2**.
 
 Diseñado con una estética moderna, limpia y comercial (estilo tienda online de referencia: fondo claro, tipografía moderna y detalles en negro), optimizado para velocidad y dispositivos móviles, y preparado para publicarse de forma 100% gratuita en **GitHub Pages**.
 
@@ -15,12 +15,14 @@ Diseñado con una estética moderna, limpia y comercial (estilo tienda online de
 - **Sección Principal (Hero)**: Título atractivo *«Encuentra tus próximas zapatillas»*, sellos de confianza y tarjeta visual destacada.
 - **Catálogo Dinámico e Interactivo**:
   - Filtro por categorías: *Todas, Novedades, Running, Baloncesto, Estilo Urbano*.
-  - Filtro por marcas: *Nike, Adidas, Jordan, New Balance, Puma, Asics*.
+  - Filtro por marcas: *adidas, Nike, Puma, Asics, Jordan, Skechers, Under Armour*.
   - Ordenación por destacados o por nombre (A-Z).
   - Buscador predictivo en vivo por nombre, marca o características.
 - **Tarjetas de Zapatillas**:
   - Fotografía en alta resolución con fallback automático anti-errores.
-  - Marca, modelo, etiqueta de novedad y aviso «Imagen ilustrativa».
+  - Tarjeta propia (degradado con el color de la marca y silueta genérica) en lugar de fotos; también sirve de respaldo si una foto no carga.
+  - Distintivo con fecha: «Top ventas Amazon.es · oct. 2026» o «Nº 1 en … · oct. 2026».
+  - Botones «Hombre» y «Mujer» cuando el modelo tiene las dos versiones; si no, «Ver en Amazon» con «Modelo de hombre», «Modelo de mujer» o «Unisex».
   - Sin precios ni valoraciones escritos a mano (lo exigen las normas de Afiliados de Amazon).
   - Botón **«Ver en Amazon»** con el enlace de afiliado; al pulsar la foto o el nombre se abre la ficha con el botón **«Ver precio en Amazon»**.
 - **Secciones Temáticas**: Novedades, Running, Baloncesto y Estilo Urbano con acceso directo a sus gamas.
@@ -66,20 +68,23 @@ Al tratarse de una web estática pura (HTML, CSS y JavaScript sin dependencias p
 
 ## 🔗 Enlaces de Afiliados de Amazon
 
-Los enlaces se generan automáticamente en `js/app.js` con la función `amazonUrl(item)` y el ID de afiliado `enkmina2shop-21`:
+> **Catálogo elegido de Los más vendidos de Amazon.es el 31-10-2026. Revisar cada mes.**
 
-- Si el producto tiene `asin`, el enlace va a su ficha: `https://www.amazon.es/dp/<ASIN>?tag=enkmina2shop-21`
-- Si `asin` está vacío, el enlace es una búsqueda en Amazon.es por el nombre del modelo.
+Los productos están en `js/products.js`. Cada uno guarda sus ASIN por versión:
 
-Para enlazar un producto concreto, rellena su campo `asin` en `js/products.js`:
 ```javascript
 {
   id: 1,
-  asin: "B0XXXXXXXX",
-  name: "Air Jordan 1 Retro High OG",
-  // ...
+  name: "Galaxy 8",
+  brand: "adidas",
+  categories: ["running", "novedades"],
+  asins: { hombre: "B0FW3S4RS2", mujer: "B0FT34NRT8" },   // o { unisex: "..." }
+  badge: `Nº 1 en running · ${LISTAS_FECHA}`,
+  description: "..."
 }
 ```
+
+`amazonUrl(asin)` en `js/app.js` genera `https://www.amazon.es/dp/<ASIN>?tag=enkmina2shop-21`. Al renovar el catálogo, actualiza también `LISTAS_FECHA` y los textos de los distintivos.
 
 ---
 

@@ -526,6 +526,7 @@ input, select {
   border-radius: var(--radius-pill);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  z-index: 3;
 }
 
 .hero-card img {
@@ -561,29 +562,138 @@ input, select {
   text-decoration: underline;
 }
 
-/* Aviso "Imagen ilustrativa" sobre las fotos */
-.img-note {
-  position: absolute;
-  right: 0.5rem;
-  bottom: 0.5rem;
-  background-color: rgba(15, 17, 21, 0.6);
+/* Tarjeta propia de la zapatilla (en lugar de foto) */
+.brand-visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 1rem;
   color: #fff;
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 0.12rem 0.45rem;
-  border-radius: var(--radius-sm);
-  pointer-events: none;
-  z-index: 2;
+  text-align: center;
+  overflow: hidden;
 }
 
-/* En la portada va debajo de la foto, no encima */
-.hero-card .img-note {
-  position: static;
-  display: inline-block;
-  margin-top: 0.4rem;
-  background-color: transparent;
+.brand-visual-shoe {
+  width: 62%;
+  max-width: 220px;
+  fill: rgba(255, 255, 255, 0.92);
+  margin-bottom: 0.6rem;
+  transition: transform 0.45s ease;
+}
+
+.brand-visual-shoe .laces {
+  fill: none;
+  stroke: rgba(15, 17, 21, 0.35);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.product-card:hover .brand-visual-shoe {
+  transform: translateY(-4px) rotate(-3deg);
+}
+
+.brand-visual-brand {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.brand-visual-model {
+  font-size: 1.15rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+/* Si algún día hay foto, se pone encima; si falla, se borra y queda la tarjeta */
+.brand-visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Botones a Amazon */
+.amazon-pair-label {
+  font-size: 0.75rem;
+  font-weight: 700;
   color: var(--color-gray-medium);
-  padding: 0;
+  margin-bottom: 0.35rem;
+}
+
+.amazon-btn-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.amazon-btn-pair svg,
+.hero-card-actions svg,
+.modal-actions svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.version-note {
+  font-size: 0.72rem;
+  color: var(--color-gray-medium);
+  text-align: center;
+  margin-top: 0.35rem;
+}
+
+.modal-product-badge {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--color-gray-dark);
+}
+
+.modal-actions .modal-cta-btn {
+  justify-content: center;
+}
+
+.hero-card .brand-visual {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+}
+
+.hero-card .brand-visual-model {
+  font-size: 1.6rem;
+}
+
+.hero-card-actions {
+  margin-top: 0.75rem;
+}
+
+.hero-card-actions .btn-primary {
+  justify-content: center;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+}
+
+.modal-img-wrap .brand-visual {
+  padding: 0.5rem;
+}
+
+.modal-img-wrap .brand-visual-brand {
+  font-size: 0.6rem;
+}
+
+.modal-img-wrap .brand-visual-model {
+  font-size: 0.8rem;
 }
 
 /* ==========================================================================

@@ -11,13 +11,65 @@ const AMAZON_TAG = "enkmina2shop-21";
 const AMAZON_LINK_ATTRS = 'target="_blank" rel="nofollow sponsored noopener"';
 
 /**
- * Enlace a Amazon.es con nuestro ID: ficha del producto si hay ASIN, si no, búsqueda por nombre
+ * Enlace a la ficha de Amazon.es de un ASIN con nuestro ID
  */
-function amazonUrl(item) {
-  if (item.asin) {
-    return `https://www.amazon.es/dp/${encodeURIComponent(item.asin)}?tag=${AMAZON_TAG}`;
+function amazonUrl(asin) {
+  return `https://www.amazon.es/dp/${encodeURIComponent(asin)}?tag=${AMAZON_TAG}`;
+}
+
+// Texto bajo el botón cuando solo hay una versión
+const VERSION_LABELS = {
+  hombre: "Modelo de hombre",
+  mujer: "Modelo de mujer",
+  unisex: "Unisex"
+};
+
+/**
+ * Botones a Amazon: "Hombre" y "Mujer" si existen las dos versiones;
+ * si no, un "Ver en Amazon" con la versión indicada debajo
+ */
+function amazonButtons(item, label = "Ver en Amazon", btnClass = "btn-offer") {
+  const icon = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+      <polyline points="15 3 21 3 21 9"></polyline>
+      <line x1="10" y1="14" x2="21" y2="3"></line>
+    </svg>`;
+  const { hombre, mujer } = item.asins;
+
+  if (hombre && mujer) {
+    return `
+      <div class="amazon-pair-label">${label}:</div>
+      <div class="amazon-btn-pair">
+        <a class="${btnClass}" href="${amazonUrl(hombre)}" ${AMAZON_LINK_ATTRS}>Hombre ${icon}</a>
+        <a class="${btnClass}" href="${amazonUrl(mujer)}" ${AMAZON_LINK_ATTRS}>Mujer ${icon}</a>
+      </div>`;
   }
-  return `https://www.amazon.es/s?k=${encodeURIComponent(item.name)}&tag=${AMAZON_TAG}`;
+
+  const [version, asin] = Object.entries(item.asins)[0];
+  return `
+    <a class="${btnClass}" href="${amazonUrl(asin)}" ${AMAZON_LINK_ATTRS}>${label} ${icon}</a>
+    <div class="version-note">${VERSION_LABELS[version]}</div>`;
+}
+
+/**
+ * Tarjeta propia de la zapatilla: degradado con el color de la marca,
+ * silueta genérica, marca y modelo. Se usa en lugar de fotos y como respaldo
+ * si alguna vez una foto (item.image) no carga.
+ */
+function productVisual(item) {
+  const [c1, c2] = BRAND_COLORS[item.brand] || ["#1f2937", "#4b5563"];
+  return `
+    <div class="brand-visual" style="background: linear-gradient(135deg, ${c1}, ${c2});">
+      <svg class="brand-visual-shoe" viewBox="0 0 120 60" aria-hidden="true">
+        <path d="M10 44V22c0-3 2-5 5-5h9c3 0 5 2 6 5l2 5c1 3 5 4 8 2l10-8c3-3 7-3 10 0l8 8c6 5 13 8 21 10l10 2c7 2 11 6 11 13H10z"></path>
+        <rect x="8" y="46" width="108" height="7" rx="3.5"></rect>
+        <path class="laces" d="M47 27l6 4M53 22l6 4M59 18l6 4"></path>
+      </svg>
+      <span class="brand-visual-brand">${item.brand}</span>
+      <span class="brand-visual-model">${item.name}</span>
+      ${item.image ? `<img src="${item.image}" alt="${item.brand} ${item.name}" loading="lazy" onerror="this.remove();">` : ''}
+    </div>`;
 }
 
 // Estado global de la aplicación
@@ -28,9 +80,6 @@ const AppState = {
   sortBy: "featured",
   activeProductModal: null
 };
-
-// Placeholder SVG en caso de imagen no disponible o fallo de red
-const SNEAKER_FALLBACK_SVG = "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20400%22%20width%3D%22400%22%20height%3D%22400%22%3E%3Crect%20width%3D%22400%22%20height%3D%22400%22%20fill%3D%22%23f3f4f6%22%2F%3E%3Cpath%20d%3D%22M80%2C260%20C120%2C260%20140%2C240%20190%2C230%20C240%2C220%20270%2C180%20310%2C180%20C330%2C180%20340%2C195%20340%2C215%20C340%2C245%20310%2C265%20270%2C270%20L90%2C270%20Z%22%20fill%3D%22%230f1115%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%22310%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20fill%3D%22%239ca3af%22%20text-anchor%3D%22middle%22%3EZAPATILLAS%20SHOP%3C%2Ftext%3E%3C%2Fsvg%3E";
 
 // Inicialización cuando el DOM está listo
 document.addEventListener("DOMContentLoaded", () => {
@@ -186,11 +235,7 @@ function getFilteredProducts() {
   return PRODUCTS_DATA.filter(item => {
     // Filtro de categoría
     if (AppState.currentCategory !== "todas") {
-      if (AppState.currentCategory === "novedades") {
-        if (!item.isNew && !item.categories.includes("novedades")) return false;
-      } else if (!item.categories.includes(AppState.currentCategory)) {
-        return false;
-      }
+      if (!item.categories.includes(AppState.currentCategory)) return false;
     }
 
     // Filtro de marca
@@ -203,7 +248,7 @@ function getFilteredProducts() {
     // Filtro de búsqueda por texto
     if (AppState.searchQuery) {
       const q = AppState.searchQuery;
-      const matchName = item.name.toLowerCase().includes(q);
+      const matchName = `${item.brand} ${item.name}`.toLowerCase().includes(q);
       const matchBrand = item.brand.toLowerCase().includes(q);
       const matchCat = item.categories.some(c => c.toLowerCase().includes(q));
       const matchDesc = item.description.toLowerCase().includes(q);
@@ -219,7 +264,8 @@ function getFilteredProducts() {
         return a.name.localeCompare(b.name, "es");
       case "featured":
       default:
-        return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
+        // Orden del catálogo en products.js
+        return a.id - b.id;
     }
   });
 }
@@ -259,11 +305,7 @@ function renderCatalog() {
     <article class="product-card" data-id="${item.id}">
       <div class="card-image-wrap" onclick="openOfferModal(${item.id})">
         ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
-        <img src="${item.image}"
-             alt="${item.name} - ${item.brand}"
-             loading="lazy"
-             onerror="this.onerror=null; this.src='${SNEAKER_FALLBACK_SVG}';">
-        <span class="img-note">Imagen ilustrativa</span>
+        ${productVisual(item)}
       </div>
       <div class="card-body">
         <div class="card-brand">${item.brand}</div>
@@ -272,14 +314,7 @@ function renderCatalog() {
         </h3>
 
         <div class="card-actions">
-          <a class="btn-offer" href="${amazonUrl(item)}" ${AMAZON_LINK_ATTRS}>
-            Ver en Amazon
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-          </a>
+          ${amazonButtons(item, "Ver en Amazon")}
         </div>
       </div>
     </article>
@@ -312,12 +347,26 @@ function resetFilters() {
 }
 
 /**
- * Enlaza el botón de la tarjeta destacada de la portada con Amazon
+ * Rellena la tarjeta destacada de la portada con el producto HERO_PRODUCT_ID
  */
 function initHeroCard() {
-  const btn = document.getElementById("heroAmazonBtn");
-  const item = PRODUCTS_DATA.find(p => p.id === 1);
-  if (btn && item) btn.href = amazonUrl(item);
+  const card = document.getElementById("heroCard");
+  const item = PRODUCTS_DATA.find(p => p.id === HERO_PRODUCT_ID);
+  if (!card || !item) return;
+
+  card.innerHTML = `
+    <span class="hero-card-badge">${item.badge}</span>
+    ${productVisual(item)}
+    <div class="hero-card-info">
+      <h3>${item.brand} ${item.name}</h3>
+      <p>${item.description}</p>
+      <div class="hero-card-meta">
+        <a href="javascript:void(0)" class="hero-card-details" onclick="openOfferModal(${item.id})">Ver detalles</a>
+      </div>
+      <div class="hero-card-actions">
+        ${amazonButtons(item, "Ver en Amazon", "btn-primary")}
+      </div>
+    </div>`;
 }
 
 /**
@@ -336,12 +385,12 @@ function openOfferModal(productId) {
 
     <div class="modal-product-summary">
       <div class="modal-img-wrap">
-        <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null; this.src='${SNEAKER_FALLBACK_SVG}';">
-        <span class="img-note">Imagen ilustrativa</span>
+        ${productVisual(item)}
       </div>
       <div class="modal-product-details">
         <span class="modal-product-brand">${item.brand}</span>
         <h3>${item.name}</h3>
+        ${item.badge ? `<span class="modal-product-badge">${item.badge}</span>` : ''}
       </div>
     </div>
 
@@ -363,22 +412,8 @@ function openOfferModal(productId) {
       ${item.description}
     </p>
 
-    <ul class="modal-specs-list">
-      <li><strong>Tienda:</strong> ${item.store}</li>
-      <li><strong>Colorway:</strong> ${item.color}</li>
-    </ul>
-
-    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-      <a href="${amazonUrl(item)}"
-         ${AMAZON_LINK_ATTRS}
-         class="modal-cta-btn">
-        Ver precio en Amazon
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-          <polyline points="15 3 21 3 21 9"></polyline>
-          <line x1="10" y1="14" x2="21" y2="3"></line>
-        </svg>
-      </a>
+    <div class="modal-actions">
+      ${amazonButtons(item, "Ver precio en Amazon", "modal-cta-btn")}
     </div>
   `;
 
@@ -489,7 +524,9 @@ function openPolicyModal(type) {
         <h3>Programa de Afiliados de Amazon</h3>
         <p>ENKMINA2 SHOP («Camina con propósito») es un catálogo independiente de calzado deportivo que participa en el Programa de Afiliados de Amazon.es (ID: <code>enkmina2shop-21</code>). Si compras a través de nuestros enlaces, podemos recibir una comisión <strong>sin ningún coste adicional para ti</strong>.</p>
         <h3>Precios, disponibilidad e imágenes</h3>
-        <p>No mostramos precios ni valoraciones. El precio, las tallas y la disponibilidad son los que indique Amazon.es en el momento de la compra. Las imágenes del catálogo son ilustrativas y pueden no corresponder exactamente al modelo.</p>
+        <p>No mostramos precios ni valoraciones. El precio, las tallas y la disponibilidad son los que indique Amazon.es en el momento de la compra. No mostramos fotos de producto: cada tarjeta es un diseño propio con la marca y el modelo; las imágenes oficiales están en Amazon.es.</p>
+        <h3>Selección del catálogo</h3>
+        <p>Los modelos se eligieron de las listas «Los más vendidos» de Amazon.es en octubre de 2026. Los distintivos «Top ventas» y «Nº 1» se refieren a esas listas en esa fecha; la clasificación de Amazon cambia continuamente.</p>
       `;
       break;
 

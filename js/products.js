@@ -1,272 +1,183 @@
 /**
  * ENKMINA2 SHOP - Catálogo de zapatillas
- * Los enlaces a Amazon.es se generan en app.js con amazonUrl(item):
- * - si "asin" tiene valor: https://www.amazon.es/dp/<asin>?tag=enkmina2shop-21
- * - si está vacío: búsqueda en Amazon.es por el nombre del modelo.
- * No se guardan precios ni valoraciones: Amazon no permite escribirlos a mano.
+ *
+ * Elegido de "Los más vendidos" de Amazon.es el 31-10-2026 (revisar cada mes).
+ * Cada producto guarda sus ASIN por versión: hombre, mujer o unisex.
+ * Los enlaces a Amazon.es se generan en app.js con amazonUrl(asin).
+ * No se guardan precios, valoraciones ni fotos de Amazon.
  */
 
+// Fecha de la consulta de las listas, para los badges
+const LISTAS_FECHA = "oct. 2026";
+
 const PRODUCTS_DATA = [
+  // ---------------- RUNNING ----------------
   {
     id: 1,
-    asin: "",
-    name: "Air Jordan 1 Retro High OG",
-    brand: "Jordan",
-    category: "baloncesto",
-    categories: ["baloncesto", "urbano", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    badge: "Novedad",
-    image: "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80",
-    description: "El clásico inmortal del baloncesto reconvertido en icono de la moda urbana. Amortiguación Air-Sole encapsulada y confección en piel premium.",
-    store: "Amazon.es",
-    sizes: ["40", "41", "42", "42.5", "43", "44", "45"],
-    color: "Rojo / Negro / Blanco"
+    name: "Galaxy 8",
+    brand: "adidas",
+    categories: ["running", "novedades"],
+    asins: { hombre: "B0FW3S4RS2", mujer: "B0FT34NRT8" },
+    badge: `Nº 1 en running · ${LISTAS_FECHA}`,
+    description: "Zapatilla de running de adidas. Sucesora de la Galaxy 7. Fue la nº 1 en las listas de running de hombre y de mujer de Amazon.es."
   },
   {
     id: 2,
-    asin: "",
-    name: "Nike Air Max 270 Flyknit",
-    brand: "Nike",
-    category: "urbano",
-    categories: ["urbano", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    badge: "Novedad",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
-    description: "Mayor unidad Max Air en el talón para una pisada ultrasuave que parece flotar. Tejido superior transpirable perfecto para el día a día.",
-    store: "Amazon.es",
-    sizes: ["39", "40", "41", "42", "43", "44"],
-    color: "Rojo Carmín / Blanco"
+    name: "Runfalcon 6",
+    brand: "adidas",
+    categories: ["running", "novedades"],
+    asins: { hombre: "B0FW7VC98Z", mujer: "B0FXMHY6TT" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla de running de adidas. Sucesora de la Runfalcon 5. Estaba en el top 10 de running de hombre y de mujer de Amazon.es."
   },
   {
     id: 3,
-    asin: "",
-    name: "Adidas Ultraboost Light",
-    brand: "Adidas",
-    category: "running",
-    categories: ["running", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    badge: "Recomendado Running",
-    image: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=800&q=80",
-    description: "La zapatilla de running con retorno de energía legendario Boost. Un 30% más ligera con suela Continental para agarre superior en asfalto húmedo.",
-    store: "Amazon.es",
-    sizes: ["40", "41", "42", "43", "44", "45", "46"],
-    color: "Negro Core / Blanco"
+    name: "Duramo SL 2",
+    brand: "adidas",
+    categories: ["running"],
+    asins: { hombre: "B0CYTFH5X8", mujer: "B0CYTB7TXW" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla de running de adidas para correr en carretera. Estaba en el top 5 de running de hombre y de mujer de Amazon.es."
   },
   {
     id: 4,
-    asin: "",
-    name: "New Balance 550 Vintage White",
-    brand: "New Balance",
-    category: "urbano",
-    categories: ["urbano", "baloncesto", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    badge: "Tendencia",
-    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80",
-    description: "Tributo al baloncesto profesional de 1989 y la cultura skate. Silueta limpia y estilizada de cuero genuino que combina con todo.",
-    store: "Amazon.es",
-    sizes: ["38", "39", "40", "41", "42", "43", "44"],
-    color: "Blanco Sal / Verde Bosque"
+    name: "Gel-Contend 10",
+    brand: "Asics",
+    categories: ["running"],
+    asins: { hombre: "B0G44ZG67G", mujer: "B0H4WGL936" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla de running de Asics. Estaba en el top 10 de running de hombre y de mujer de Amazon.es."
   },
   {
     id: 5,
-    asin: "",
-    name: "Nike Air Force 1 '07 All White",
-    brand: "Nike",
-    category: "urbano",
-    categories: ["urbano"],
-    isNew: false,
-    isFeatured: true,
-    badge: "Clásico Eterno",
-    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80",
-    description: "El icono de las pistas de basket de 1982 que conquistó el hip-hop y las calles del mundo. Cuero impecable y amortiguación Nike Air duradera.",
-    store: "Amazon.es",
-    sizes: ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45"],
-    color: "Triple White"
+    name: "Charged Surge 4",
+    brand: "Under Armour",
+    categories: ["running"],
+    asins: { hombre: "B0BZXMVK68", mujer: "B0BZXL5TTB" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla de running de Under Armour para correr en carretera. Estaba en las listas de running de hombre y de mujer de Amazon.es."
   },
   {
     id: 6,
-    asin: "",
-    name: "Puma MB.02 Rick & Morty / LaMelo",
-    brand: "Puma",
-    category: "baloncesto",
-    categories: ["baloncesto", "novedades"],
-    isNew: true,
-    isFeatured: false,
-    badge: "Edición Limitada",
-    image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80",
-    description: "La zapatilla signature de LaMelo Ball con tecnología NITRO Foam para saltos explosivos y amortiguación receptiva en la cancha.",
-    store: "Amazon.es",
-    sizes: ["41", "42", "43", "44", "45"],
-    color: "Volt / Coral Explosivo"
+    name: "Vomero 18",
+    brand: "Nike",
+    categories: ["running"],
+    asins: { mujer: "B0DTKN5JCJ" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla de running de Nike. Estaba en el top 10 de running de mujer de Amazon.es."
   },
+
+  // ---------------- URBANO ----------------
   {
     id: 7,
-    asin: "",
-    name: "Asics Gel-Kayano 30 Running",
-    brand: "Asics",
-    category: "running",
-    categories: ["running"],
-    isNew: false,
-    isFeatured: true,
-    badge: "Máxima Amortiguación",
-    image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=800&q=80",
-    description: "Estabilidad adaptativa 4D GUIDANCE SYSTEM™ y tecnología PureGEL™ para transiciones suaves e impacto reducido en maratón y entrenamientos largos.",
-    store: "Amazon.es",
-    sizes: ["40.5", "41.5", "42", "42.5", "43.5", "44", "45"],
-    color: "Azul Eléctrico / Naranja"
+    name: "Uno Stand On Air",
+    brand: "Skechers",
+    categories: ["urbano"],
+    asins: { hombre: "B082N4NRCN", mujer: "B07H61JFTV" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla urbana de Skechers. Estaba en el top 10 de zapatillas de hombre y de mujer de Amazon.es."
   },
   {
     id: 8,
-    asin: "",
-    name: "Nike Dunk Low Retro Panda",
-    brand: "Nike",
-    category: "urbano",
-    categories: ["urbano", "baloncesto"],
-    isNew: false,
-    isFeatured: true,
-    badge: "Favorito Urbano",
-    image: "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?auto=format&fit=crop&w=800&q=80",
-    description: "Creada para las canchas universitarias y adoptada por el streetwear contemporáneo. Contraste blanco y negro versátil con zona del tobillo acolchada.",
-    store: "Amazon.es",
-    sizes: ["38", "39", "40", "41", "42", "43", "44"],
-    color: "Blanco / Negro"
+    name: "VL Court 3.0",
+    brand: "adidas",
+    categories: ["urbano"],
+    asins: { hombre: "B0CKLX4612", mujer: "B0C59CXZVX" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla de calle de adidas con estilo de pista clásico. Estaba en las listas de zapatillas de hombre y de mujer de Amazon.es."
   },
   {
     id: 9,
-    asin: "",
-    name: "Nike Zoom Freak 5 (Giannis)",
-    brand: "Nike",
-    category: "baloncesto",
-    categories: ["baloncesto"],
-    isNew: false,
-    isFeatured: false,
-    badge: "",
-    image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?auto=format&fit=crop&w=800&q=80",
-    description: "Diseñadas para la velocidad supersónica de Giannis Antetokounmpo. Tracción multidireccional que frena en seco y permite giros vertiginosos.",
-    store: "Amazon.es",
-    sizes: ["41", "42", "43", "44", "45", "46"],
-    color: "Gris Platino / Verde Lima"
+    name: "Smash 3.0 L",
+    brand: "Puma",
+    categories: ["urbano"],
+    asins: { unisex: "B09YXPM5BJ" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla urbana de Puma, de estilo clásico. Estaba en la lista de zapatillas de hombre de Amazon.es."
   },
   {
     id: 10,
-    asin: "",
-    name: "New Balance Fresh Foam X 1080v13",
-    brand: "New Balance",
-    category: "running",
-    categories: ["running", "novedades"],
-    isNew: true,
-    isFeatured: false,
-    badge: "Confort Premium",
-    image: "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
-    description: "Si New Balance solo fabricara una zapatilla de running, sería la 1080. Amortiguación Fresh Foam X inigualable con empeine de malla transpirable.",
-    store: "Amazon.es",
-    sizes: ["40", "41", "42", "43", "44", "45"],
-    color: "Gris Clásico NB / Blanco"
+    name: "Club II Era",
+    brand: "Puma",
+    categories: ["urbano"],
+    asins: { unisex: "B0CKJK36MD" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla urbana de Puma de inspiración retro. Estaba en el top 5 de zapatillas de hombre de Amazon.es."
   },
   {
     id: 11,
-    asin: "",
-    name: "Air Jordan 4 Retro SE Craft",
-    brand: "Jordan",
-    category: "baloncesto",
-    categories: ["baloncesto", "urbano", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    badge: "Colección Hype",
-    image: "https://images.unsplash.com/photo-1512374382149-233c42b661ac?auto=format&fit=crop&w=800&q=80",
-    description: "La legendaria silueta de Tinker Hatfield confeccionada con mezcla artesanal de ante y cuero de primera calidad. Una joya para coleccionistas.",
-    store: "Amazon.es",
-    sizes: ["40", "41", "42", "43", "44", "45", "46"],
-    color: "Gris Piedra / Vainilla"
+    name: "Graceful – Get Connected",
+    brand: "Skechers",
+    categories: ["urbano"],
+    asins: { mujer: "B01M01K39E" },
+    badge: `Nº 1 en zapatillas mujer · ${LISTAS_FECHA}`,
+    description: "Zapatilla de Skechers. Fue la nº 1 de la lista de zapatillas de mujer de Amazon.es."
   },
   {
     id: 12,
-    asin: "",
-    name: "Adidas Forum Low Classic",
-    brand: "Adidas",
-    category: "urbano",
+    name: "Breaknet Sleek",
+    brand: "adidas",
     categories: ["urbano"],
-    isNew: false,
-    isFeatured: false,
-    badge: "",
-    image: "https://images.unsplash.com/photo-1518002171953-a080ee817e1f?auto=format&fit=crop&w=800&q=80",
-    description: "Mucho más que una zapatilla de basket: un statement de los 80. Detalle característico en 'X' en el tobillo y suela de goma vintage.",
-    store: "Amazon.es",
-    sizes: ["39", "40", "41", "42", "43", "44", "45"],
-    color: "Blanco Vintage / Azul Marino"
+    asins: { mujer: "B0FT3XYNNW" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla urbana de adidas. Estaba en el top 10 de zapatillas de mujer de Amazon.es."
   },
+
+  // ---------------- BALONCESTO ----------------
   {
     id: 13,
-    asin: "",
-    name: "Nike Pegasus 40 Road Running",
-    brand: "Nike",
-    category: "running",
-    categories: ["running"],
-    isNew: false,
-    isFeatured: false,
-    badge: "Caballo de Batalla",
-    image: "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=800&q=80",
-    description: "40 años acompañando a corredores de todo el planeta. Doble unidad Zoom Air y espuma React para una zapatilla incansable en asfalto y tierra.",
-    store: "Amazon.es",
-    sizes: ["40", "41", "42", "43", "44", "45"],
-    color: "Negro Obsidiana / Blanco"
+    name: "Own The Game 3",
+    brand: "adidas",
+    categories: ["baloncesto"],
+    asins: { hombre: "B0CKY1FL9G" },
+    badge: `Nº 1 en baloncesto · ${LISTAS_FECHA}`,
+    description: "Zapatilla de baloncesto de adidas. Fue la nº 1 de la lista de baloncesto de hombre de Amazon.es."
   },
   {
     id: 14,
-    asin: "",
-    name: "Puma Suede Classic XXI",
-    brand: "Puma",
-    category: "urbano",
-    categories: ["urbano"],
-    isNew: false,
-    isFeatured: false,
-    badge: "Icono Retro",
-    image: "https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?auto=format&fit=crop&w=800&q=80",
-    description: "Desde su debut en 1968, ha vestido a b-boys, atletas y artistas. Ante suave con la franja característica de Puma en contraste.",
-    store: "Amazon.es",
-    sizes: ["37", "38", "39", "40", "41", "42", "43", "44"],
-    color: "Negro / Blanco Marfil"
+    name: "Court Vision Low Next Nature",
+    brand: "Nike",
+    categories: ["baloncesto", "urbano"],
+    asins: { hombre: "B0983LCM84" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla de Nike de inspiración baloncesto, muy usada como zapatilla urbana. Fue la nº 2 de la lista de baloncesto de hombre de Amazon.es."
   },
   {
     id: 15,
-    asin: "",
-    name: "Asics Novablast 4 Performance",
-    brand: "Asics",
-    category: "running",
-    categories: ["running", "novedades"],
-    isNew: true,
-    isFeatured: true,
-    badge: "Rebote Dinámico",
-    image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=800&q=80",
-    description: "Espuma FF BLAST™ PLUS ECO para un despegue enérgico tipo trampolín. Ideal para corredores que buscan ritmo vivo y ligereza extrema.",
-    store: "Amazon.es",
-    sizes: ["41", "42", "42.5", "43", "44", "45"],
-    color: "Blanco Ópalo / Amarillo Lima"
+    name: "Court Pro 3",
+    brand: "Puma",
+    categories: ["baloncesto"],
+    asins: { unisex: "B0FV8QQKLP" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla de baloncesto de Puma. Estaba en el top 10 de la lista de baloncesto de hombre de Amazon.es."
   },
   {
     id: 16,
-    asin: "",
-    name: "Jordan Luka 2 'Space Hunter'",
+    name: "Tatum 3",
     brand: "Jordan",
-    category: "baloncesto",
     categories: ["baloncesto"],
-    isNew: false,
-    isFeatured: false,
-    badge: "Control de Ritmo",
-    image: "https://images.unsplash.com/photo-1579338559194-a162d19bf842?auto=format&fit=crop&w=800&q=80",
-    description: "Inspirada en el step-back de Luka Dončić. Estructura envolvente de 360 grados para frenadas laterales y control absoluto de la gravedad.",
-    store: "Amazon.es",
-    sizes: ["41", "42", "43", "44", "45", "46"],
-    color: "Negro / Morado Cósmico"
+    asins: { hombre: "B0DP2S2JJD" },
+    badge: `Top ventas Amazon.es · ${LISTAS_FECHA}`,
+    description: "Zapatilla de baloncesto de la línea Jordan de Nike. Estaba en la lista de baloncesto de hombre de Amazon.es."
   }
 ];
 
+// Producto de la tarjeta destacada de la portada
+const HERO_PRODUCT_ID = 1;
+
 // Marcas disponibles
-const AVAILABLE_BRANDS = ["Todas", "Nike", "Adidas", "Jordan", "New Balance", "Puma", "Asics"];
+const AVAILABLE_BRANDS = ["Todas", "adidas", "Nike", "Puma", "Asics", "Jordan", "Skechers", "Under Armour"];
+
+// Colores de la tarjeta propia de cada marca (degradado)
+const BRAND_COLORS = {
+  "adidas": ["#111827", "#475569"],
+  "Nike": ["#ea580c", "#9a3412"],
+  "Puma": ["#dc2626", "#7f1d1d"],
+  "Asics": ["#1d4ed8", "#1e3a8a"],
+  "Jordan": ["#b91c1c", "#111827"],
+  "Skechers": ["#0284c7", "#1e3a8a"],
+  "Under Armour": ["#334155", "#020617"]
+};
 
 // Categorías disponibles
 const AVAILABLE_CATEGORIES = [
@@ -285,6 +196,5 @@ if (typeof window !== "undefined") {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { PRODUCTS_DATA, AVAILABLE_BRANDS, AVAILABLE_CATEGORIES };
+  module.exports = { PRODUCTS_DATA, AVAILABLE_BRANDS, AVAILABLE_CATEGORIES, BRAND_COLORS, HERO_PRODUCT_ID };
 }
-
