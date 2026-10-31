@@ -104,4 +104,4 @@ Los productos están en `js/products.js`. Cada uno guarda sus ASIN por versión:
 
 «En calidad de Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.»
 
-ENKMINA2 SHOP participa en el Programa de Afiliados de Amazon.es (ID: `enkmina2shop-21`). La web no muestra precios ni valoraciones: el precio y la disponibilidad son los que indique Amazon.es en el momento de la compra. Las imágenes son ilustrativas.
+ENKMINA2 SHOP participa en el Programa de Afiliados de Amazon.es (ID: `enkmina2shop-21`). La web no muestra precios ni valoraciones: el precio y la disponibilidad son los que indique Amazon.es en el momento de la compra. La web no muestra fotos de producto: cada tarjeta es un diseño propio con la marca y el modelo.
