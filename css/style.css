@@ -1400,6 +1400,61 @@ input, select {
   box-shadow: 0 0 0 3px rgba(15, 17, 21, 0.08);
 }
 
+/* Campo trampa contra el spam: oculto para las personas */
+.form-gotcha {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  color: var(--color-gray-dark);
+  cursor: pointer;
+}
+
+.form-check input {
+  margin-top: 0.2rem;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.form-check a {
+  color: var(--color-dark);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.form-submit {
+  justify-content: center;
+}
+
+.form-submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.policy-modal-container .form-status {
+  margin: 0;
+  min-height: 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.policy-modal-container .form-status.success {
+  color: #047857;
+}
+
+.policy-modal-container .form-status.error {
+  color: var(--color-danger);
+}
+
 /* ==========================================================================
    FOOTER (PIE DE PÁGINA)
    ========================================================================== */

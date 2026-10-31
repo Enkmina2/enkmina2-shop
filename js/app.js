@@ -479,10 +479,17 @@ function closeAllModals() {
   document.body.style.overflow = "";
 }
 
+// Formulario de contacto (Formspree)
+const FORMSPREE_URL = "https://formspree.io/f/mpppjond";
+
+// Lo escrito en el formulario se guarda al abrir la Política de Privacidad desde él
+let contactDraft = null;
+
 /**
  * Abre modal de políticas o contacto
  */
 function openPolicyModal(type) {
+  const fromContact = saveContactDraft();
   closeAllModals();
   const overlay = document.getElementById("policyModalOverlay");
   const container = document.getElementById("policyModalContainer");
@@ -497,11 +504,14 @@ function openPolicyModal(type) {
       content = `
         <p>En <strong>ENKMINA2 SHOP</strong> nos tomamos muy en serio la confidencialidad y privacidad de nuestros visitantes.</p>
         <h3>1. Datos recopilados</h3>
-        <p>Este sitio web estático no recopila ni almacena datos personales ni financieros de los usuarios en ninguna base de datos sin su consentimiento explícito.</p>
-        <h3>2. Enlaces a Amazon.es</h3>
+        <p>Esta web no recopila datos personales, salvo los que nos envíes voluntariamente a través del formulario de contacto.</p>
+        <h3>2. Formulario de contacto</h3>
+        <p>Si nos escribes, recogemos tu <strong>nombre</strong>, tu <strong>correo electrónico</strong> y tu <strong>mensaje</strong>, y los usamos <strong>solo para responderte</strong>. El formulario se envía a través de <strong>Formspree</strong>, un servicio externo que nos hace llegar el mensaje; puedes consultar su política de privacidad en formspree.io. No cedemos tus datos a nadie más.</p>
+        <h3>3. Enlaces a Amazon.es</h3>
         <p>Nuestro catálogo contiene enlaces de afiliado a Amazon.es. Al hacer clic en ellos abandonas nuestro sitio y pasa a aplicarse la política de privacidad de Amazon. Amazon puede usar cookies para registrar que has llegado desde nuestros enlaces; consulta su Aviso de Privacidad y su Aviso de Cookies en Amazon.es.</p>
-        <h3>3. Derechos</h3>
-        <p>Puedes ejercer tus derechos de acceso, rectificación, supresión y oposición sobre cualquier dato personal que nos facilites.</p>
+        <h3>4. Derechos</h3>
+        <p>Puedes ejercer tus derechos de acceso, rectificación, supresión y oposición sobre los datos que nos hayas enviado escribiéndonos a través del formulario de contacto.</p>
+        ${fromContact ? `<button type="button" class="btn-primary" onclick="openPolicyModal('contacto')">Volver al formulario de contacto</button>` : ''}
       `;
       break;
 
@@ -533,7 +543,29 @@ function openPolicyModal(type) {
     case "contacto":
       title = "Contacto y Soporte";
       content = `
-        <p>Estamos preparando un canal de contacto. Mientras tanto, puedes consultar las dudas sobre tallas, envíos o devoluciones directamente en la página del producto en Amazon.es.</p>
+        <p>¿Tienes una duda o una sugerencia sobre la web? Escríbenos. Las dudas sobre tallas, envíos o devoluciones de un pedido las resuelve Amazon.es en la página del producto.</p>
+        <form id="contactForm" class="contact-form-grid" novalidate>
+          <div class="form-group">
+            <label for="contactName">Nombre</label>
+            <input type="text" id="contactName" name="nombre" required maxlength="100" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="contactEmail">Correo electrónico</label>
+            <input type="email" id="contactEmail" name="email" required maxlength="150" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="contactMsg">Mensaje</label>
+            <textarea id="contactMsg" name="mensaje" rows="5" required maxlength="3000"></textarea>
+          </div>
+          <!-- Trampa contra el spam: las personas no la ven ni la rellenan -->
+          <input type="text" name="_gotcha" class="form-gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <label class="form-check">
+            <input type="checkbox" id="contactPrivacy" name="privacidad_aceptada" value="si" required>
+            <span>He leído y acepto la <a href="javascript:void(0)" onclick="openPolicyModal('privacidad')">Política de Privacidad</a></span>
+          </label>
+          <button type="submit" class="btn-primary form-submit">Enviar mensaje</button>
+          <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+        </form>
       `;
       break;
   }
@@ -543,12 +575,93 @@ function openPolicyModal(type) {
     ${content}
   `;
 
+  if (type === "contacto") initContactForm();
+
   overlay.classList.add("active");
   document.body.style.overflow = "hidden";
 }
 
+/**
+ * Guarda lo escrito en el formulario de contacto si está abierto.
+ * Devuelve true si lo estaba.
+ */
+function saveContactDraft() {
+  const form = document.getElementById("contactForm");
+  if (!form || !form.closest(".modal-overlay.active")) return false;
+  contactDraft = {
+    nombre: form.nombre.value,
+    email: form.email.value,
+    mensaje: form.mensaje.value,
+    privacidad: form.privacidad_aceptada.checked
+  };
+  return true;
+}
+
+/**
+ * Prepara el formulario de contacto: recupera el borrador y lo envía a Formspree
+ */
 function initContactForm() {
-  // Inicialización reservada para formularios en página si procede
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+
+  if (contactDraft) {
+    form.nombre.value = contactDraft.nombre;
+    form.email.value = contactDraft.email;
+    form.mensaje.value = contactDraft.mensaje;
+    form.privacidad_aceptada.checked = contactDraft.privacidad;
+  }
+
+  form.addEventListener("submit", handleContactSubmit);
+}
+
+/**
+ * Envía el formulario con fetch. Solo muestra éxito si Formspree responde que sí.
+ */
+async function handleContactSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const status = document.getElementById("contactStatus");
+  const button = form.querySelector(".form-submit");
+
+  const setStatus = (text, kind) => {
+    status.textContent = text;
+    status.className = `form-status ${kind || ""}`;
+  };
+
+  if (!form.checkValidity()) {
+    setStatus(form.privacidad_aceptada.checked
+      ? "Revisa los campos: nombre, un correo válido y el mensaje son obligatorios."
+      : "Para enviar el mensaje tienes que aceptar la Política de Privacidad.", "error");
+    form.reportValidity();
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Enviando…";
+  setStatus("");
+
+  let ok = false;
+  try {
+    const response = await fetch(FORMSPREE_URL, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
+    });
+    ok = response.ok;
+  } catch (err) {
+    ok = false;
+  }
+
+  button.disabled = false;
+  button.textContent = "Enviar mensaje";
+
+  if (ok) {
+    form.reset();
+    contactDraft = null;
+    setStatus("Mensaje enviado. Te responderemos lo antes posible.", "success");
+  } else {
+    setStatus("No se ha podido enviar. Inténtalo de nuevo más tarde.", "error");
+  }
 }
 
 /**

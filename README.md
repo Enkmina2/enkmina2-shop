@@ -28,7 +28,7 @@ Diseñado con una estética moderna, limpia y comercial (estilo tienda online de
 - **Secciones Temáticas**: Novedades, Running, Baloncesto y Estilo Urbano con acceso directo a sus gamas.
 - **Cumplimiento Legal y Transparencia**:
   - Aviso obligatorio de Afiliados de Amazon visible en el pie de página y en el Aviso Legal.
-  - Modales informativos para **Política de Privacidad**, **Política de Cookies**, **Aviso Legal** y **Contacto**.
+  - Modales informativos para **Política de Privacidad**, **Política de Cookies**, **Aviso Legal** y **Contacto** (formulario real que se envía con Formspree, con casilla obligatoria de Política de Privacidad).
 
 ---
 
