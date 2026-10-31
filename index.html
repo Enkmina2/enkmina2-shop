@@ -4,31 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="ENKMINA2 SHOP - Camina con propósito. Catálogo especializado en zapatillas deportivas elegidas de los más vendidos de Amazon.es: adidas, Nike, Puma, Asics, Jordan, Skechers y Under Armour.">
-  <meta name="theme-color" content="#0f1115">
+  <meta name="theme-color" content="#0B1F4D">
   <title>ENKMINA2 SHOP | Camina con propósito</title>
-  
+
+  <!-- Tipografías: Playfair Display (títulos) e Inter (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap">
+
   <!-- Estilos principales -->
   <link rel="stylesheet" href="./css/style.css">
-  
+
   <!-- Favicon con el logo original de ENKMINA2 -->
-  <link rel="icon" type="image/png" href="./logo.png">
+  <link rel="icon" type="image/webp" href="./logo.webp">
 </head>
 <body>
 
-  <!-- BARRA DE ANUNCIO SUPERIOR -->
-  <div class="announcement-bar">
-    <span class="tag">ENKMINA2 SHOP</span>
-    <span>⚡ «Camina con propósito» | Selección de zapatillas deportivas disponibles en Amazon.es</span>
-  </div>
-
-  <!-- CABECERA PRINCIPAL -->
+  <!-- CABECERA PRINCIPAL (fija, se oscurece al hacer scroll) -->
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
-        
+
         <!-- Logotipo original ENKMINA2 SHOP -->
         <a href="#inicio" class="logo" aria-label="ENKMINA2 SHOP - Camina con propósito">
-          <img src="./logo.png" alt="Logo ENKMINA2" class="brand-logo-img">
+          <img src="./logo.webp" alt="Logo ENKMINA2" class="brand-logo-img">
           <div class="logo-text-group">
             <div class="logo-title-row">
               <span class="logo-name">ENKMINA2</span>
@@ -37,18 +36,6 @@
             <span class="logo-slogan">Camina con propósito</span>
           </div>
         </a>
-
-        <!-- Buscador en tiempo real -->
-        <div class="header-search">
-          <span class="search-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </span>
-          <input type="text" id="headerSearchInput" placeholder="Buscar por modelo o marca (adidas, Nike, Skechers...)" aria-label="Buscar zapatillas">
-          <button id="clearSearchBtn" class="clear-btn" aria-label="Limpiar búsqueda">✕</button>
-        </div>
 
         <!-- Menú de navegación de escritorio -->
         <nav class="main-nav" aria-label="Navegación principal">
@@ -60,6 +47,18 @@
             <li><a href="#urbano" onclick="setCategory('urbano', true); return false;">Urbano</a></li>
           </ul>
         </nav>
+
+        <!-- Buscador en tiempo real -->
+        <div class="header-search">
+          <span class="search-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input type="text" id="headerSearchInput" placeholder="Buscar modelo o marca" aria-label="Buscar zapatillas">
+          <button id="clearSearchBtn" class="clear-btn" aria-label="Limpiar búsqueda">✕</button>
+        </div>
 
         <!-- Botón menú móvil -->
         <button id="mobileToggleBtn" class="mobile-toggle" aria-label="Abrir menú de navegación">
@@ -76,11 +75,11 @@
 
   <!-- MENÚ MÓVIL DESPLEGABLE -->
   <div id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
-    <div style="display: flex; align-items: center; gap: 0.75rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border); margin-bottom: 0.5rem;">
-      <img src="./logo.png" alt="Logo ENKMINA2" style="width: 42px; height: 42px; object-fit: contain; aspect-ratio: 1/1;">
+    <div class="drawer-brand">
+      <img src="./logo.webp" alt="Logo ENKMINA2">
       <div>
-        <div style="font-size: 1.15rem; font-weight: 900; line-height: 1.1;">ENKMINA2 <span style="font-weight: 400;">SHOP</span></div>
-        <div style="font-size: 0.72rem; color: var(--color-gray-medium); font-weight: 600;">Camina con propósito</div>
+        <div class="drawer-brand-name">ENKMINA2 <span>SHOP</span></div>
+        <div class="drawer-brand-slogan">Camina con propósito</div>
       </div>
     </div>
     <ul class="mobile-nav-links">
@@ -91,18 +90,18 @@
       <li><a href="#urbano" onclick="setCategory('urbano', true); return false;">Estilo Urbano & Casual <span>→</span></a></li>
       <li><a href="javascript:void(0)" onclick="openPolicyModal('contacto')">Contacto y Dudas <span>→</span></a></li>
     </ul>
-    <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--color-border); font-size: 0.85rem; color: var(--color-gray-medium);">
+    <div class="drawer-note">
       Marcas del catálogo: adidas, Nike, Puma, Asics, Jordan, Skechers y Under Armour.
     </div>
   </div>
 
   <main id="inicio">
 
-    <!-- SECCIÓN HERO -->
+    <!-- SECCIÓN HERO (pantalla completa) -->
     <section class="hero">
       <div class="container">
         <div class="hero-grid">
-          
+
           <!-- Contenido del Hero -->
           <div class="hero-content">
             <div class="hero-pill">
@@ -114,13 +113,15 @@
               Encuentra tus <span class="highlight">próximas zapatillas</span>
             </h1>
 
+            <p class="hero-tagline">Camina con propósito</p>
+
             <p class="hero-subtitle">
-              Explora zapatillas deportivas de primeras marcas, descubre las novedades para running, baloncesto y estilo urbano, y consulta el precio y la disponibilidad directamente en Amazon.es.
+              Zapatillas deportivas de primeras marcas, elegidas entre las más vendidas de Amazon.es: novedades, running, baloncesto y estilo urbano. Consulta el precio y la disponibilidad directamente en Amazon.es.
             </p>
 
             <div class="hero-actions">
               <a href="#catalogo" class="btn-primary">
-                Explorar catálogo completo
+                Ver colección
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
@@ -159,9 +160,8 @@
 
           <!-- Tarjeta visual de producto destacado -->
           <div class="hero-visual">
-            <div class="hero-card" id="heroCard">
+            <div class="hero-amb" id="heroCard">
               <!-- Rellenado por app.js con el producto destacado (HERO_PRODUCT_ID) -->
-            </div>
             </div>
           </div>
 
@@ -172,9 +172,9 @@
     <!-- SECCIÓN PRINCIPAL: CATÁLOGO Y FILTROS -->
     <section id="catalogo" class="catalog-section">
       <div class="container">
-        
+
         <!-- Cabecera de sección y pestañas de categorías -->
-        <div class="section-header">
+        <div class="section-header reveal">
           <div>
             <h2 class="section-header-title">Catálogo de Zapatillas</h2>
             <p class="section-header-desc">Filtra por disciplina, marca o utiliza el buscador para dar con tu par ideal.</p>
@@ -189,8 +189,8 @@
         <!-- Barra de filtros secundarios: Marcas y Ordenación -->
         <div class="filters-bar">
           <div class="brand-filters">
-            <span class="brand-filters-label">Marca:</span>
-            <div id="brandChipsContainer" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <span class="brand-filters-label">Marca</span>
+            <div id="brandChipsContainer" style="display: flex; gap: 0.4rem; flex-wrap: inherit;">
               <!-- Rellenado dinámicamente por app.js -->
             </div>
           </div>
@@ -223,12 +223,12 @@
     <!-- SECCIÓN DESTACADA: NOVEDADES -->
     <section id="novedades" class="feature-showcase">
       <div class="container">
-        <div class="showcase-banner">
+        <div class="showcase-banner reveal">
           <div class="showcase-banner-content">
             <span class="showcase-tag">Nuevas versiones</span>
             <h2>Novedades y Nuevas Siluetas</h2>
             <p>Las nuevas versiones de dos de las zapatillas de running más vendidas en Amazon.es: la adidas Galaxy 8 y la Runfalcon 6, que sustituyen a la Galaxy 7 y la Runfalcon 5.</p>
-            <button class="btn-white" onclick="setCategory('novedades', true)">
+            <button class="btn-ghost" onclick="setCategory('novedades', true)">
               Explorar solo novedades
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -240,12 +240,12 @@
     <!-- SECCIÓN DESTACADA: RUNNING -->
     <section id="running" class="feature-showcase alt-bg">
       <div class="container">
-        <div class="showcase-banner running-theme">
+        <div class="showcase-banner running-theme reveal">
           <div class="showcase-banner-content">
             <span class="showcase-tag">Alto Rendimiento</span>
             <h2>Especial Zapatillas de Running</h2>
             <p>Las zapatillas de running que más se venden en Amazon.es para hombre y mujer: adidas, Asics, Under Armour y Nike.</p>
-            <button class="btn-white" onclick="setCategory('running', true)">
+            <button class="btn-ghost" onclick="setCategory('running', true)">
               Ver gama Running
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -257,12 +257,12 @@
     <!-- SECCIÓN DESTACADA: BALONCESTO -->
     <section id="baloncesto" class="feature-showcase">
       <div class="container">
-        <div class="showcase-banner basket-theme">
+        <div class="showcase-banner basket-theme reveal">
           <div class="showcase-banner-content">
             <span class="showcase-tag">En la Cancha y en la Calle</span>
             <h2>Baloncesto: Fuerza, Salto y Agarre</h2>
             <p>Los modelos más vendidos de la lista de baloncesto de Amazon.es: adidas Own The Game 3, Nike Court Vision Low, Puma Court Pro 3 y Jordan Tatum 3.</p>
-            <button class="btn-white" onclick="setCategory('baloncesto', true)">
+            <button class="btn-ghost" onclick="setCategory('baloncesto', true)">
               Ver zapatillas Baloncesto
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -274,12 +274,12 @@
     <!-- SECCIÓN DESTACADA: ESTILO URBANO -->
     <section id="urbano" class="feature-showcase alt-bg">
       <div class="container">
-        <div class="showcase-banner urban-theme">
+        <div class="showcase-banner urban-theme reveal">
           <div class="showcase-banner-content">
             <span class="showcase-tag">Lifestyle & Streetwear</span>
             <h2>Estilo Urbano y Siluetas Retro</h2>
             <p>Zapatillas para el día a día de Skechers, adidas y Puma, elegidas entre las más vendidas de Amazon.es para hombre y mujer.</p>
-            <button class="btn-white" onclick="setCategory('urbano', true)">
+            <button class="btn-ghost" onclick="setCategory('urbano', true)">
               Ver estilo Urbano
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -293,7 +293,7 @@
   <!-- PIE DE PÁGINA (FOOTER) -->
   <footer class="site-footer">
     <div class="container">
-      
+
       <!-- Cuadro informativo destacado de Afiliación -->
       <div class="affiliate-disclaimer-card">
         <h4>
@@ -313,15 +313,15 @@
       <!-- Columnas del pie de página -->
       <div class="footer-top">
         <div class="footer-brand">
-          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.9rem;">
-            <img src="./logo.png" alt="Logo ENKMINA2" style="width: 44px; height: 44px; object-fit: contain; aspect-ratio: 1/1;">
+          <div class="footer-logo">
+            <img src="./logo.webp" alt="Logo ENKMINA2" loading="lazy">
             <div>
-              <h3 style="margin-bottom: 0; font-size: 1.3rem;">ENKMINA2 <span style="font-weight: 300;">SHOP</span></h3>
-              <span style="font-size: 0.75rem; color: #9ca3af; font-weight: 600;">Camina con propósito</span>
+              <h3>ENKMINA2 <span>SHOP</span></h3>
+              <span class="footer-slogan">Camina con propósito</span>
             </div>
           </div>
           <p>Tu punto de encuentro para descubrir y elegir zapatillas deportivas elegidas de los más vendidos de Amazon.es: adidas, Nike, Puma, Asics, Jordan, Skechers y Under Armour.</p>
-          <div style="font-size: 0.8rem; color: #6b7280;">
+          <div class="footer-note">
             Sitio web preparado para publicación estática en GitHub Pages.
           </div>
         </div>
@@ -391,5 +391,68 @@
   <!-- Scripts -->
   <script src="./js/products.js"></script>
   <script src="./js/app.js"></script>
+
+  <!-- Efectos ligeros: cabecera al hacer scroll y aparición de tarjetas (sin librerías) -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var header = document.querySelector(".site-header");
+
+      // Altura real de la cabecera fija, para el hero, el menú móvil y los anclajes
+      function setHeaderHeight() {
+        root.style.setProperty("--header-h", header.offsetHeight + "px");
+      }
+      setHeaderHeight();
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(setHeaderHeight).observe(header);
+      } else {
+        window.addEventListener("resize", setHeaderHeight, { passive: true });
+      }
+
+      // Cabecera más opaca al bajar
+      var ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          header.classList.toggle("is-scrolled", window.scrollY > 24);
+          ticking = false;
+        });
+      }
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      // Aparición suave al entrar en pantalla; sin soporte o con movimiento reducido se ve todo tal cual
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduceMotion || !("IntersectionObserver" in window)) return;
+      root.classList.add("js-reveal");
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          el.classList.add("is-visible");
+          observer.unobserve(el);
+          // Quita el retraso escalonado para que el hover responda al momento
+          setTimeout(function () { el.style.removeProperty("--reveal-delay"); }, 1200);
+        });
+      }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
+
+      function watch(scope) {
+        var items = scope.querySelectorAll(".product-card:not(.is-visible), .reveal:not(.is-visible)");
+        items.forEach(function (el, i) {
+          el.style.setProperty("--reveal-delay", (i % 4) * 70 + "ms");
+          observer.observe(el);
+        });
+      }
+      watch(document);
+
+      // app.js vuelve a pintar las tarjetas al filtrar o buscar
+      ["productsGrid", "heroCard"].forEach(function (id) {
+        var node = document.getElementById(id);
+        if (node) new MutationObserver(function () { watch(node); }).observe(node, { childList: true });
+      });
+    })();
+  </script>
 </body>
 </html>

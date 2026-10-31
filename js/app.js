@@ -28,7 +28,7 @@ const VERSION_LABELS = {
  * Botones a Amazon: "Hombre" y "Mujer" si existen las dos versiones;
  * si no, un "Ver en Amazon" con la versión indicada debajo
  */
-function amazonButtons(item, label = "Ver en Amazon", btnClass = "btn-offer") {
+function amazonButtons(item, label = "Ver en Amazon", btnClass = "btn-offer", showPairLabel = true) {
   const icon = `
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -39,7 +39,7 @@ function amazonButtons(item, label = "Ver en Amazon", btnClass = "btn-offer") {
 
   if (hombre && mujer) {
     return `
-      <div class="amazon-pair-label">${label}:</div>
+      ${showPairLabel ? `<div class="amazon-pair-label">${label}:</div>` : ''}
       <div class="amazon-btn-pair">
         <a class="${btnClass}" href="${amazonUrl(hombre)}" ${AMAZON_LINK_ATTRS}>Hombre ${icon}</a>
         <a class="${btnClass}" href="${amazonUrl(mujer)}" ${AMAZON_LINK_ATTRS}>Mujer ${icon}</a>
@@ -53,9 +53,9 @@ function amazonButtons(item, label = "Ver en Amazon", btnClass = "btn-offer") {
 }
 
 /**
- * Tarjeta propia de la zapatilla: degradado con el color de la marca,
- * silueta genérica, marca y modelo. Se usa en lugar de fotos y como respaldo
- * si alguna vez una foto (item.image) no carga.
+ * Imagen de la zapatilla: la imagen de ambiente (item.ambientImage) encima de la
+ * tarjeta propia de la marca (degradado, silueta, marca y modelo). Si la imagen
+ * no carga, se borra y queda la tarjeta de la marca.
  */
 function productVisual(item) {
   const [c1, c2] = BRAND_COLORS[item.brand] || ["#1f2937", "#4b5563"];
@@ -68,8 +68,32 @@ function productVisual(item) {
       </svg>
       <span class="brand-visual-brand">${item.brand}</span>
       <span class="brand-visual-model">${item.name}</span>
-      ${item.image ? `<img src="${item.image}" alt="${item.brand} ${item.name}" loading="lazy" onerror="this.remove();">` : ''}
+      ${item.ambientImage ? `<img src="${item.ambientImage}" alt="${item.ambientAlt || `${item.brand} ${item.name}`}" loading="lazy" onerror="this.remove();">` : ''}
     </div>`;
+}
+
+/**
+ * Tarjeta vertical 1:2 con la imagen de ambiente y, abajo sobre un degradado
+ * azul marino, badge, marca, modelo y botones a Amazon
+ */
+function ambientCard(item, extraClass = "") {
+  return `
+    <article class="product-card amb-card ${extraClass}" data-id="${item.id}">
+      <div class="amb-media" onclick="openOfferModal(${item.id})">
+        ${productVisual(item)}
+      </div>
+      ${item.ambientImage ? `<span class="amb-note">Imagen de ambiente</span>` : ''}
+      <div class="amb-overlay">
+        ${item.badge ? `<span class="amb-badge">${item.badge}</span>` : ''}
+        <div class="amb-brand">${item.brand}</div>
+        <h3 class="amb-model" title="${item.name}">
+          <a href="javascript:void(0)" onclick="openOfferModal(${item.id})">${item.name}</a>
+        </h3>
+        <div class="amb-actions">
+          ${amazonButtons(item, "Ver en Amazon", "amb-btn", false)}
+        </div>
+      </div>
+    </article>`;
 }
 
 // Estado global de la aplicación
@@ -301,24 +325,7 @@ function renderCatalog() {
     return;
   }
 
-  grid.innerHTML = filtered.map(item => `
-    <article class="product-card" data-id="${item.id}">
-      <div class="card-image-wrap" onclick="openOfferModal(${item.id})">
-        ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
-        ${productVisual(item)}
-      </div>
-      <div class="card-body">
-        <div class="card-brand">${item.brand}</div>
-        <h3 class="card-title" title="${item.name}">
-          <a href="javascript:void(0)" onclick="openOfferModal(${item.id})">${item.name}</a>
-        </h3>
-
-        <div class="card-actions">
-          ${amazonButtons(item, "Ver en Amazon")}
-        </div>
-      </div>
-    </article>
-  `).join("");
+  grid.innerHTML = filtered.map(item => ambientCard(item)).join("");
 }
 
 /**
@@ -354,19 +361,7 @@ function initHeroCard() {
   const item = PRODUCTS_DATA.find(p => p.id === HERO_PRODUCT_ID);
   if (!card || !item) return;
 
-  card.innerHTML = `
-    <span class="hero-card-badge">${item.badge}</span>
-    ${productVisual(item)}
-    <div class="hero-card-info">
-      <h3>${item.brand} ${item.name}</h3>
-      <p>${item.description}</p>
-      <div class="hero-card-meta">
-        <a href="javascript:void(0)" class="hero-card-details" onclick="openOfferModal(${item.id})">Ver detalles</a>
-      </div>
-      <div class="hero-card-actions">
-        ${amazonButtons(item, "Ver en Amazon", "btn-primary")}
-      </div>
-    </div>`;
+  card.innerHTML = ambientCard(item, "amb-card-hero");
 }
 
 /**
