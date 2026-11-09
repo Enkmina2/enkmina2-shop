@@ -513,7 +513,9 @@ function openPolicyModal(type) {
     case "cookies":
       title = "Política de Cookies";
       content = `
-        <p>Esta web no instala cookies propias ni de analítica.</p>
+        <p>Esta web no usa cookies de analítica ni de publicidad.</p>
+        <h3>Aviso de cookies</h3>
+        <p>El aviso de cookies que ves al entrar lo ofrece <strong>Cookie Compliance</strong>, de Hu-manity.co. Para recordar lo que eliges, guarda en tu navegador una cookie técnica (<code>hu-consent</code>) y registra tu consentimiento en Hu-manity.co. Hasta que eliges, el aviso bloquea cualquier servicio externo que no sea necesario. Puedes cambiar tu elección en cualquier momento desde el propio aviso.</p>
         <h3>Cookies de Amazon</h3>
         <ul>
           <li><strong>Cookies de afiliación de Amazon:</strong> Cuando visitas Amazon.es desde nuestros enlaces, Amazon puede usar cookies para registrar que llegas desde ENKMINA2 SHOP y atribuirnos las compras que cumplan los requisitos del Programa de Afiliados. Esas cookies las gestiona Amazon según su propio Aviso de Cookies.</li>
