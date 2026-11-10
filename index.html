@@ -23,6 +23,45 @@
 
   <!-- Favicon con el logo original de ENKMINA2 -->
   <link rel="icon" type="image/webp" href="./logo.webp">
+
+  <!-- Google tag (gtag.js) - Google Analytics 4 (G-1YM4D25SN4).
+       Solo se carga si el visitante acepta las cookies en el banner de hu-manity
+       (categoría 2, donde hu-manity clasifica a Google Tag Manager). Sin consentimiento no se descarga nada de Google. -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    (function () {
+      var GA_ID = 'G-1YM4D25SN4';
+      var cargado = false;
+      function permiteAnalitica(c) {
+        return !!(c && c.consent === true && c.categories && c.categories[2] === true);
+      }
+      function leerConsentimiento() {
+        try {
+          var m = document.cookie.match(/(?:^|;\s*)hu-consent=([^;]*)/);
+          return m ? JSON.parse(decodeURIComponent(m[1])) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+      function cargarGA() {
+        if (cargado) return;
+        cargado = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', GA_ID);
+      }
+      // Visitante que ya aceptó en otra visita
+      if (permiteAnalitica(leerConsentimiento())) cargarGA();
+      // Visitante que acepta ahora en el banner
+      document.addEventListener('set-consent.hu', function (e) {
+        if (permiteAnalitica(e.detail)) cargarGA();
+      });
+    })();
+  </script>
 </head>
 <body>
 
